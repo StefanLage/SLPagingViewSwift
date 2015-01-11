@@ -189,6 +189,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.setupPagingProcess()
+        self.setCurrentIndex(self.indexSelected, animated: false)
     }
     
     override func didReceiveMemoryWarning() {

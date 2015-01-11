@@ -39,7 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         var items = [UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
-        controller = SLPagingViewSwift(items: items, controllers: [ctr1, ctr2, ctr3], showPageControl: false)
+        var controllers = [ctr1, ctr2, ctr3]
+        controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
         
         controller?.pagingViewMoving = ({ subviews in
             for v in subviews {
