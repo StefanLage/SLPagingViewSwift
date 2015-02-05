@@ -31,6 +31,11 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   var pagingViewMovingRedefine: SLPagingViewMovingRedefine?
   var didChangedPage: SLPagingViewDidChanged?
   var navigationSideItemsStyle: SLNavigationSideItemsStyle = .SLNavigationSideItemsStyleDefault
+  public var needToShowPageControl: Bool = false {
+    didSet {
+      setupPagingProcess()
+    }
+  }
   
   // MARK: - Private properties
   private var screenSize: CGSize {
@@ -40,7 +45,6 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   private var pageControl: UIPageControl  = UIPageControl()
   private var navigationBarView: UIView   = UIView()
   private var navigationItems = [UIView]()
-  private var needToShowPageControl: Bool = false
   private var isUserInteraction: Bool     = false
   private var indexSelected: NSInteger    = 0
   
@@ -114,6 +118,16 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
       self.setupPagingProcess()
       self.setCurrentIndex(self.indexSelected, animated: false)
     }
+  }
+  
+  public override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.navigationBar.addSubview(self.navigationBarView)
+  }
+  
+  public override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.navigationBarView.removeFromSuperview()
   }
   
   override public func didReceiveMemoryWarning() {
@@ -235,8 +249,8 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
           self.navigationBarView.addSubview(self.pageControl)
       }
       
-      self.navigationController?.navigationBar.addSubview(self.navigationBarView)
-      
+//      self.navigationController?.navigationBar.addSubview(self.navigationBarView)
+    
   }
   
   // Loads all views
