@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DemoTableViewController: UIViewController {
+class DemoViewController: UIViewController {
   
   // MARK: - Constants
   private let dataSource = ["Hello world!", "Shaqtin' a fool!", "YEAHHH!",
@@ -50,30 +50,32 @@ class DemoTableViewController: UIViewController {
     navTitleLabel3.font = font
     navTitleLabel3.textColor = UIColor.whiteColor()
     
-    let pagingController = SLPagingViewSwift(items: [navTitleLabel1, navTitleLabel2, navTitleLabel3], views: [self.demoTableView, self.demoTableView, self.demoTableView], showPageControl: true, navBarBackground: UIColor(red: 0.33, green: 0.68, blue: 0.91, alpha: 1.0))
-    
+    let pagingController = SLPagingViewSwift(items: [navTitleLabel1, navTitleLabel2, navTitleLabel3], viewsOrControllers: [self.demoTableView, self.demoTableView, self.demoTableView], showPageControl: true, navBarBackground: UIColor(red: 0.33, green: 0.68, blue: 0.91, alpha: 1.0))
+
     pagingController.currentPageControlColor = UIColor.whiteColor()
     pagingController.tintPageControlColor = UIColor(white: 0.799, alpha: 1.0)
-    pagingController.pagingViewMovingRedefine = ({ scrollView, subviews in
+    pagingController.pagingViewMovingRedefine = {
+      (scrollView: UIScrollView, subviews: [UIView]) -> Void in
       var i = 0
       var xOffset = scrollView.contentOffset.x
-      for v in subviews {
-        var lbl = v as UILabel
-        var alpha = CGFloat(0)
-        
-        if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
-          alpha = 1.0 - (xOffset - (CGFloat(i)*320.0)) / 320.0
+      for view in subviews {
+        if let titleLabel = view as? UILabel {
+          var alpha = CGFloat(0)
+          
+          if(titleLabel.frame.origin.x > 45 && titleLabel.frame.origin.x < 145) {
+            alpha = 1.0 - (xOffset - (CGFloat(i)*320.0)) / 320.0
+          }
+          else if (titleLabel.frame.origin.x > 145 && titleLabel.frame.origin.x < 245) {
+            alpha = (xOffset - (CGFloat(i)*320.0)) / 320.0 + 1.0
+          }
+          else if(titleLabel.frame.origin.x == 145){
+            alpha = 1.0
+          }
+          titleLabel.alpha = CGFloat(alpha)
+          i++
         }
-        else if (lbl.frame.origin.x > 145 && lbl.frame.origin.x < 245) {
-          alpha = (xOffset - (CGFloat(i)*320.0)) / 320.0 + 1.0
-        }
-        else if(lbl.frame.origin.x == 145){
-          alpha = 1.0
-        }
-        lbl.alpha = CGFloat(alpha)
-        i++
       }
-    })
+    }
     
     pagingController.didChangedPage = ({ currentIndex in
       println(currentIndex)
@@ -86,7 +88,7 @@ class DemoTableViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension DemoTableViewController: UITableViewDataSource {
+extension DemoViewController: UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return 1
   }
