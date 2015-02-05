@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F2E173031A8312F800784350 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2E173021A8312F800784350 /* Storyboard.storyboard */; };
+		F2E173051A83148200784350 /* DemoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E173041A83148200784350 /* DemoTableViewController.swift */; };
 		F85CA9771A618E180013CF3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85CA9761A618E180013CF3F /* AppDelegate.swift */; };
 		F85CA97E1A618E180013CF3F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F85CA97D1A618E180013CF3F /* Images.xcassets */; };
 		F85CA98D1A618E180013CF3F /* TwitterLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85CA98C1A618E180013CF3F /* TwitterLikeTests.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F2E173021A8312F800784350 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		F2E173041A83148200784350 /* DemoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoTableViewController.swift; sourceTree = "<group>"; };
 		F85CA9711A618E180013CF3F /* TwitterLike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterLike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F85CA9751A618E180013CF3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F85CA9761A618E180013CF3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +84,8 @@
 				F85CA9761A618E180013CF3F /* AppDelegate.swift */,
 				F85CA97D1A618E180013CF3F /* Images.xcassets */,
 				F85CA9741A618E180013CF3F /* Supporting Files */,
+				F2E173021A8312F800784350 /* Storyboard.storyboard */,
+				F2E173041A83148200784350 /* DemoTableViewController.swift */,
 			);
 			path = TwitterLike;
 			sourceTree = "<group>";
@@ -201,6 +207,7 @@
 			files = (
 				F85CA97E1A618E180013CF3F /* Images.xcassets in Resources */,
 				F85CA9981A618E790013CF3F /* Default-568h@2x.png in Resources */,
+				F2E173031A8312F800784350 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +227,7 @@
 			files = (
 				F85CA9771A618E180013CF3F /* AppDelegate.swift in Sources */,
 				F85CA9D11A6198F10013CF3F /* SLPagingViewSwift.swift in Sources */,
+				F2E173051A83148200784350 /* DemoTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +332,7 @@
 			buildSettings = {
 				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/TwitterLike-Prefix.pch";
 				INFOPLIST_FILE = TwitterLike/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -334,6 +343,7 @@
 			buildSettings = {
 				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/TwitterLike-Prefix.pch";
 				INFOPLIST_FILE = TwitterLike/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

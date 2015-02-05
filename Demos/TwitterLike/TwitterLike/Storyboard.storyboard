@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1vl-lx-UJu">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Usm-kj-JaE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1vl-lx-UJu" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hSa-6f-2z8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="eRs-Ss-rxJ" kind="relationship" relationship="rootViewController" id="9Bf-qK-Fib"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uuR-73-Ro6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="742" y="493"/>
+        </scene>
+        <!--Demo Table View Controller-->
+        <scene sceneID="UKZ-be-abc">
+            <objects>
+                <viewController id="eRs-Ss-rxJ" customClass="DemoTableViewController" customModule="TwitterLike" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bYm-kz-UjO"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZwC-Hi-8x9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4pe-2W-jAn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EhY-LM-vuY">
+                                <rect key="frame" x="16" y="99" width="568" height="30"/>
+                                <state key="normal" title="Push programmatically">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushProgrammatically" destination="eRs-Ss-rxJ" eventType="touchUpInside" id="cR8-hw-nxQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="EhY-LM-vuY" secondAttribute="trailing" constant="16" id="82Y-2Y-5eV"/>
+                            <constraint firstItem="EhY-LM-vuY" firstAttribute="leading" secondItem="4pe-2W-jAn" secondAttribute="leading" constant="16" id="TK9-o6-t9e"/>
+                            <constraint firstItem="EhY-LM-vuY" firstAttribute="top" secondItem="bYm-kz-UjO" secondAttribute="bottom" constant="35" id="ulx-pj-iWf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="M9h-5M-OA0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pXA-oQ-bDb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1475" y="493"/>
+        </scene>
+    </scenes>
+</document>
