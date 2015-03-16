@@ -174,10 +174,21 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   
   public override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+    self.childViewControllers
+    for viewOrViewController in self.viewsOrContrllers.values {
+      if let viewController  = viewOrViewController as? UIViewController {
+        viewController.willMoveToParentViewController(self)
+      }
+    }
   }
   
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
+    for viewOrViewController in self.viewsOrContrllers.values {
+      if let viewController  = viewOrViewController as? UIViewController {
+        viewController.didMoveToParentViewController(self)
+      }
+    }
     if let navigationController = self.embedNavigationController {
       navigationController.navigationBar.addSubview(self.navigationBarView)
     } else if let navigationController = self.navigationController {
@@ -216,9 +227,10 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         view.tag = index
         viewsOrContrllers[index] = view
       }
-      if let controller = viewOrController as? UIViewController {
-        controller.view.tag = index
-        viewsOrContrllers[index] = controller
+      if let viewController = viewOrController as? UIViewController {
+        self.addChildViewController(viewController)
+        viewController.view.tag = index
+        viewsOrContrllers[index] = viewController
       }
       index++
     }
@@ -241,7 +253,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     self.scrollView.delegate                       = self
     self.scrollView.bounces                        = false
     self.view.addSubview(self.scrollView)
-    
+
     // Adds all views
     self.addViews()
 
