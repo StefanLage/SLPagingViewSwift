@@ -24,11 +24,22 @@ typealias SLPagingViewDidChanged = ((currentPage: NSInteger)-> ())
 public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
   // MARK: - Public properties
+  weak var embedNavigationController: UINavigationController?
   var viewsOrContrllers = [Int: UIResponder]()
   var currentPageControlColor: UIColor?
-  var tintPageControlColor: UIColor?
+  var tintPageControlColor: UIColor? {
+    didSet {
+      setupPagingProcess()
+    }
+  }
   var pagingViewMoving: SLPagingViewMoving?
-  var pagingViewMovingRedefine: SLPagingViewMovingRedefine?
+  var pagingViewMovingRedefine: SLPagingViewMovingRedefine? {
+    didSet {
+      if let pagingViewMovingAnimation = self.pagingViewMovingRedefine {
+        pagingViewMovingAnimation(scrollView: scrollView, subviews: self.navigationItems)
+      }
+    }
+  }
   var didChangedPage: SLPagingViewDidChanged?
   var navigationSideItemsStyle: SLNavigationSideItemsStyle = .SLNavigationSideItemsStyleDefault
   public var needToShowPageControl: Bool = false {
@@ -38,9 +49,6 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   }
   
   // MARK: - Private properties
-  private var screenSize: CGSize {
-    return UIScreen.mainScreen().bounds.size
-  }
   private var scrollView: UIScrollView    = UIScrollView()
   private var pageControl: UIPageControl  = UIPageControl()
   private var navigationBarView: UIView   = UIView()
@@ -111,35 +119,6 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     self.setup(items, viewsOrControllers: viewsOrControllers)
   }
   
-  // MARK: - Life cycle
-  override public func viewDidLoad() {
-    super.viewDidLoad()
-    if self.viewsOrContrllers.count > 0 {
-      self.setupPagingProcess()
-      self.setCurrentIndex(self.indexSelected, animated: false)
-    }
-  }
-  
-  public override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    self.navigationController?.navigationBar.addSubview(self.navigationBarView)
-  }
-  
-  public override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-    self.navigationBarView.removeFromSuperview()
-  }
-  
-  override public func didReceiveMemoryWarning() {
-      super.didReceiveMemoryWarning()
-      // Dispose of any resources that can be recreated.
-  }
-  
-  override public func viewWillLayoutSubviews() {
-      super.viewWillLayoutSubviews()
-      self.navigationBarView.frame = CGRectMake(0, 0, screenSize.width, 44)
-  }
-  
   // MARK: - Public methods
   
   /**
@@ -169,15 +148,50 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   *  @param animated animate the moving
   */
   func setCurrentIndex(index: NSInteger, animated: Bool){
-      // Be sure we got an existing index
-      if(index < 0 || index > self.navigationBarView.subviews.count - 1){
-          var exc = NSException(name: "Index out of range", reason: "The index is out of range of subviews's countsd!", userInfo: nil)
-          exc.raise()
-      }
-      self.indexSelected = index
-      // Get the right position and update it
-      var xOffset = CGFloat(index) * self.screenSize.width
-      self.scrollView.setContentOffset(CGPointMake(xOffset, self.scrollView.contentOffset.y), animated: animated)
+    // Be sure we got an existing index
+    if(index < 0 || index > self.navigationBarView.subviews.count - 1){
+      var exc = NSException(name: "Index out of range", reason: "The index is out of range of subviews's countsd!", userInfo: nil)
+      exc.raise()
+    }
+    self.indexSelected = index
+    // Get the right position and update it
+    var xOffset = CGFloat(index) * self.view.frame.width
+    self.scrollView.setContentOffset(CGPointMake(xOffset, self.scrollView.contentOffset.y), animated: animated)
+  }
+  
+  // MARK: - Life cycle
+  override public func viewDidLoad() {
+    super.viewDidLoad()
+    if self.viewsOrContrllers.count > 0 {
+      self.setupPagingProcess()
+      self.setCurrentIndex(self.indexSelected, animated: false)
+    }
+  }
+  
+  public override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+  }
+  
+  public override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+  }
+  
+  public override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    if let navigationController = self.embedNavigationController {
+      navigationController.navigationBar.addSubview(self.navigationBarView)
+    } else if let navigationController = self.navigationController {
+      navigationController.navigationBar.addSubview(self.navigationBarView)
+    }
+  }
+  
+  public override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.navigationBarView.removeFromSuperview()
+  }
+  
+  override public func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
   }
   
   // MARK: - Internal methods
@@ -185,7 +199,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     var i = 0
     for item in items {
       var vSize: CGSize = item.isKindOfClass(UILabel.classForCoder()) ? self.getLabelSize(item as UILabel) : item.frame.size
-      var originX       = (screenSize.width/2.0 - vSize.width/2.0) + CGFloat(i * 100)
+      var originX       = (self.view.frame.width/2.0 - vSize.width/2.0) + CGFloat(i * 100)
       item.frame           = CGRectMake(originX, 8, vSize.width, vSize.height)
       item.tag             = i
       var tap           = UITapGestureRecognizer(target: self, action: "tapOnHeader:")
@@ -219,37 +233,33 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     return titleLabels
   }
   private func setupPagingProcess() {
-      var frame: CGRect                              = CGRectMake(0, 0, screenSize.width, self.view.frame.height)
+    self.scrollView                                = UIScrollView(frame: self.view.frame)
+    self.scrollView.backgroundColor                = UIColor.clearColor()
+    self.scrollView.pagingEnabled                  = true
+    self.scrollView.showsHorizontalScrollIndicator = false
+    self.scrollView.showsVerticalScrollIndicator   = false
+    self.scrollView.delegate                       = self
+    self.scrollView.bounces                        = false
+    self.view.addSubview(self.scrollView)
+    
+    // Adds all views
+    self.addViews()
 
-      self.scrollView                                = UIScrollView(frame: frame)
-      self.scrollView.backgroundColor                = UIColor.clearColor()
-      self.scrollView.pagingEnabled                  = true
-      self.scrollView.showsHorizontalScrollIndicator = false
-      self.scrollView.showsVerticalScrollIndicator   = false
-      self.scrollView.delegate                       = self
-      self.scrollView.bounces                        = false
-      self.scrollView.contentInset                   = UIEdgeInsets(top: 0, left: 0, bottom: -80, right: 0)
-      
-      self.view.addSubview(self.scrollView)
-      
-      // Adds all views
-      self.addViews()
-      
-      if(self.needToShowPageControl){
-          // Make the page control
-          self.pageControl               = UIPageControl(frame: CGRectMake(0, 35, 0, 0))
-          self.pageControl.numberOfPages = self.navigationBarView.subviews.count
-          self.pageControl.currentPage   = 0
-          if self.currentPageControlColor != nil {
-              self.pageControl.currentPageIndicatorTintColor = self.currentPageControlColor
-          }
-          if self.tintPageControlColor != nil {
-              self.pageControl.pageIndicatorTintColor = self.tintPageControlColor
-          }
-          self.navigationBarView.addSubview(self.pageControl)
+    self.pageControl.removeFromSuperview()
+    
+    if(self.needToShowPageControl){
+      // Make the page control
+      self.pageControl               = UIPageControl(frame: CGRectMake(0, 35, self.view.frame.size.width, 0))
+      self.pageControl.numberOfPages = self.navigationBarView.subviews.count
+      self.pageControl.currentPage   = 0
+      if self.currentPageControlColor != nil {
+          self.pageControl.currentPageIndicatorTintColor = self.currentPageControlColor
       }
-      
-//      self.navigationController?.navigationBar.addSubview(self.navigationBarView)
+      if self.tintPageControlColor != nil {
+          self.pageControl.pageIndicatorTintColor = self.tintPageControlColor
+      }
+      self.navigationBarView.addSubview(self.pageControl)
+    }
     
   }
   
@@ -257,10 +267,10 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   private func addViews() {
     var index = 0
     for (key, viewOrViewController) in viewsOrContrllers {
-      let width = screenSize.width * CGFloat(viewsOrContrllers.count)
+      let width = self.view.frame.width * CGFloat(viewsOrContrllers.count)
       let height = self.view.frame.height
       self.scrollView.contentSize = CGSize(width: width, height: height)
-      let viewFrame = CGRect(x: screenSize.width * CGFloat(index), y: 0, width: screenSize.width, height: screenSize.height)
+      let viewFrame = CGRect(x: self.view.frame.width * CGFloat(index), y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
       if let view = viewOrViewController as? UIView {
         view.frame = viewFrame
         scrollView.addSubview(view)
@@ -280,7 +290,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   
   private func sendNewIndex(scrollView: UIScrollView){
       var xOffset      = Float(scrollView.contentOffset.x)
-      var currentIndex = (Int(roundf(xOffset)) % (self.navigationBarView.subviews.count * Int(self.screenSize.width))) / Int(self.screenSize.width)
+      var currentIndex = (Int(roundf(xOffset)) % (self.navigationBarView.subviews.count * Int(self.view.frame.width))) / Int(self.view.frame.size.width)
       if(self.pageControl.currentPage != currentIndex) {
           self.pageControl.currentPage = currentIndex
           if self.didChangedPage != nil {
@@ -290,9 +300,9 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   }
   
   func getOriginX(vSize: CGSize, idx: CGFloat, distance: CGFloat, xOffset: CGFloat) -> CGFloat{
-      var result = self.screenSize.width / 2.0 - vSize.width/2.0
+      var result = self.view.frame.size.width / 2.0 - vSize.width/2.0
       result += (idx * distance)
-      result -= xOffset / (self.screenSize.width / distance)
+      result -= xOffset / (self.view.frame.size.width / distance)
       return result
   }
   
@@ -310,10 +320,6 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         }
       }
   }
-  
-  
-  
-
     
 }
 
@@ -330,11 +336,11 @@ extension SLPagingViewSwift: UIScrollViewDelegate {
       v.frame      = CGRectMake(originX, 8, vSize.width, vSize.height)
       i++
     }
-    if (self.pagingViewMovingRedefine != nil) {
-      self.pagingViewMovingRedefine!(scrollView: scrollView, subviews: self.navigationItems)
+    if let pagingViewMovingAnimation = self.pagingViewMovingRedefine {
+      pagingViewMovingAnimation(scrollView: scrollView, subviews: self.navigationItems)
     }
-    if (self.pagingViewMoving != nil) {
-      self.pagingViewMoving!(subviews: self.navigationItems)
+    if let pagingViewMoving = self.pagingViewMoving {
+      pagingViewMoving(subviews: self.navigationItems)
     }
   }
   
