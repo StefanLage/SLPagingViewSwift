@@ -273,14 +273,25 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             let width                   = SCREENSIZE.width * CGFloat(self.viewControllers.count)
             let height                  = self.view.frame.height
             self.scrollView.contentSize = CGSize(width: width, height: height)
+            
+            /**
             var i: Int                  = 0
             self.viewControllers.enumerateKeysAndObjectsUsingBlock({ key, obj, stop in
-                var rect: CGRect = CGRectMake(self.SCREENSIZE.width * CGFloat(i), 0, self.SCREENSIZE.width, self.SCREENSIZE.height)
-                var v            = obj as UIView
+            var rect: CGRect = CGRectMake(self.SCREENSIZE.width * CGFloat(i), 0, self.SCREENSIZE.width, self.SCREENSIZE.height)
+            var v            = obj as UIView
+            v.frame          = rect
+            self.scrollView.addSubview(v)
+            i++
+            })
+            **/
+            
+            for j in 0...self.viewControllers.count-1 {
+                var view = self.viewControllers.objectForKey(NSNumber(integer: j)) as UIView
+                var rect: CGRect = CGRectMake(self.SCREENSIZE.width * CGFloat(j), 0, self.SCREENSIZE.width, self.SCREENSIZE.height)
+                var v            = view as UIView
                 v.frame          = rect
                 self.scrollView.addSubview(v)
-                i++
-            })
+            }
         }
     }
     
