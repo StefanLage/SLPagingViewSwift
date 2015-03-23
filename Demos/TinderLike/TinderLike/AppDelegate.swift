@@ -23,23 +23,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var ctr1 = UIViewController()
         ctr1.title = "Ctr1"
         ctr1.view.backgroundColor = orange
+        
         var ctr2 = UIViewController()
         ctr2.title = "Ctr2"
         ctr2.view.backgroundColor = UIColor.yellowColor()
+        
         var ctr3 = UIViewController()
         ctr3.title = "Ctr3"
         ctr3.view.backgroundColor = gray
         
+        var ctr4 = UIViewController()
+        ctr4.title = "Ctr4"
+        ctr4.view.backgroundColor = UIColor.blueColor()
+        
         var img1 = UIImage(named: "gear")
         img1 = img1?.imageWithRenderingMode(.AlwaysTemplate)
+        
         var img2 = UIImage(named: "profile")
         img2 = img2?.imageWithRenderingMode(.AlwaysTemplate)
+        
         var img3 = UIImage(named: "chat")
         img3 = img3?.imageWithRenderingMode(.AlwaysTemplate)
         
+        var img4 = UIImage(named: "gear")
+        img4 = img4?.imageWithRenderingMode(.AlwaysTemplate)
         
-        var items = [UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
-        var controllers = [ctr1, ctr2, ctr3]
+        
+        var items = [UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3), UIImageView(image: img4)]
+        var controllers = [ctr1, ctr2, ctr3, ctr4]
         controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
         
         controller?.pagingViewMoving = ({ subviews in
