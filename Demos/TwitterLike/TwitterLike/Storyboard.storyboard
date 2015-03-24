@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1vl-lx-UJu">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Usm-kj-JaE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1vl-lx-UJu" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hSa-6f-2z8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="eRs-Ss-rxJ" kind="relationship" relationship="rootViewController" id="9Bf-qK-Fib"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uuR-73-Ro6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="742" y="493"/>
+        </scene>
+        <!--SLPagingViewSwift-->
+        <scene sceneID="UKZ-be-abc">
+            <objects>
+                <viewController id="eRs-Ss-rxJ" customClass="DemoViewController" customModule="TwitterLike" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bYm-kz-UjO"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZwC-Hi-8x9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4pe-2W-jAn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EhY-LM-vuY">
+                                <rect key="frame" x="16" y="99" width="568" height="30"/>
+                                <state key="normal" title="Push programmatically">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushProgrammatically" destination="eRs-Ss-rxJ" eventType="touchUpInside" id="cR8-hw-nxQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Tv-GO-RA4">
+                                <rect key="frame" x="16" y="137" width="568" height="30"/>
+                                <state key="normal" title="Push via Storyboard">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="zNS-iR-P3l" kind="show" id="An7-QI-Vkk"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="EhY-LM-vuY" secondAttribute="trailing" constant="16" id="82Y-2Y-5eV"/>
+                            <constraint firstAttribute="trailing" secondItem="1Tv-GO-RA4" secondAttribute="trailing" constant="16" id="KOX-QZ-ezT"/>
+                            <constraint firstItem="EhY-LM-vuY" firstAttribute="leading" secondItem="4pe-2W-jAn" secondAttribute="leading" constant="16" id="TK9-o6-t9e"/>
+                            <constraint firstItem="1Tv-GO-RA4" firstAttribute="leading" secondItem="4pe-2W-jAn" secondAttribute="leading" constant="16" id="UQs-gy-5Ez"/>
+                            <constraint firstItem="1Tv-GO-RA4" firstAttribute="top" secondItem="EhY-LM-vuY" secondAttribute="bottom" constant="8" id="jYh-ON-Edr"/>
+                            <constraint firstItem="EhY-LM-vuY" firstAttribute="top" secondItem="bYm-kz-UjO" secondAttribute="bottom" constant="35" id="ulx-pj-iWf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="SLPagingViewSwift" id="M9h-5M-OA0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pXA-oQ-bDb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1475" y="493"/>
+        </scene>
+        <!--Paging View Controller-->
+        <scene sceneID="rx6-Lf-c1l">
+            <objects>
+                <viewController id="zNS-iR-P3l" customClass="PagingViewController" customModule="TwitterLike" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JKm-rY-amj"/>
+                        <viewControllerLayoutGuide type="bottom" id="EVK-bv-ASu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mcz-DD-r4l">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pgh-sS-ngu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2213" y="493"/>
+        </scene>
+        <!--Brown-->
+        <scene sceneID="diD-iN-edw">
+            <objects>
+                <viewController storyboardIdentifier="BrownViewController" title="Brown" id="R7V-kJ-yf4" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sdT-yJ-hpO"/>
+                        <viewControllerLayoutGuide type="bottom" id="Mth-C7-CVg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mak-32-Hed">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5fV-Zs-R7I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2213" y="1212"/>
+        </scene>
+        <!--Purple-->
+        <scene sceneID="J6H-oT-WGE">
+            <objects>
+                <viewController storyboardIdentifier="PurpleViewController" title="Purple" id="1Dm-wi-ynt" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sA0-IX-TkT"/>
+                        <viewControllerLayoutGuide type="bottom" id="9cm-nZ-xb3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NQi-Gt-VVM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qnq-Ik-QZ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2922" y="1212"/>
+        </scene>
+    </scenes>
+</document>
