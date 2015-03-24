@@ -277,12 +277,11 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
   
   // Loads all views
   private func addViews() {
-    var index = 0
     for (key, viewOrViewController) in viewsOrContrllers {
       let width = self.view.frame.width * CGFloat(viewsOrContrllers.count)
       let height = self.view.frame.height
       self.scrollView.contentSize = CGSize(width: width, height: height)
-      let viewFrame = CGRect(x: self.view.frame.width * CGFloat(index), y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+      let viewFrame = CGRect(x: self.view.frame.width * CGFloat(key), y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
       if let view = viewOrViewController as? UIView {
         view.frame = viewFrame
         scrollView.addSubview(view)
@@ -291,7 +290,6 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         viewController.view.frame = viewFrame
         scrollView.addSubview(viewController.view)
       }
-      index++
     }
   }
   
