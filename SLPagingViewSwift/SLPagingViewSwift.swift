@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum SLNavigationSideItemsStyle: Int {
+public enum SLNavigationSideItemsStyle: Int {
     case SLNavigationSideItemsStyleOnBounds = 40
     case SLNavigationSideItemsStyleClose = 30
     case SLNavigationSideItemsStyleNormal = 20
@@ -17,20 +17,20 @@ enum SLNavigationSideItemsStyle: Int {
     case SLNavigationSideItemsStyleCloseToEachOne = -40
 }
 
-typealias SLPagingViewMoving = ((subviews: [UIView])-> ())
-typealias SLPagingViewMovingRedefine = ((scrollView: UIScrollView, subviews: NSArray)-> ())
-typealias SLPagingViewDidChanged = ((currentPage: Int)-> ())
+public typealias SLPagingViewMoving = ((subviews: [UIView])-> ())
+public typealias SLPagingViewMovingRedefine = ((scrollView: UIScrollView, subviews: NSArray)-> ())
+public typealias SLPagingViewDidChanged = ((currentPage: Int)-> ())
 
-class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
+public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Public properties
     var views = [Int : UIView]()
-    var currentPageControlColor: UIColor?
-    var tintPageControlColor: UIColor?
-    var pagingViewMoving: SLPagingViewMoving?
-    var pagingViewMovingRedefine: SLPagingViewMovingRedefine?
-    var didChangedPage: SLPagingViewDidChanged?
-    var navigationSideItemsStyle: SLNavigationSideItemsStyle = .SLNavigationSideItemsStyleDefault
+    public var currentPageControlColor: UIColor?
+    public var tintPageControlColor: UIColor?
+    public var pagingViewMoving: SLPagingViewMoving?
+    public var pagingViewMovingRedefine: SLPagingViewMovingRedefine?
+    public var didChangedPage: SLPagingViewDidChanged?
+    public var navigationSideItemsStyle: SLNavigationSideItemsStyle = .SLNavigationSideItemsStyleDefault
     
     // MARK: - Private properties
     private var SCREENSIZE: CGSize {
@@ -45,21 +45,21 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     private var indexSelected: Int          = 0
     
     // MARK: - Constructors
-    required init(coder decoder: NSCoder) {
+    public required init(coder decoder: NSCoder) {
         super.init(coder: decoder)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Here you can init your properties
     }
     
     // MARK: - Constructors with items & views
-    convenience init(items: [UIView], views: [UIView]) {
+    public convenience init(items: [UIView], views: [UIView]) {
         self.init(items: items, views: views, showPageControl:false, navBarBackground:UIColor.whiteColor())
     }
     
-    convenience init(items: [UIView], views: [UIView], showPageControl: Bool){
+    public convenience init(items: [UIView], views: [UIView], showPageControl: Bool){
         self.init(items: items, views: views, showPageControl:showPageControl, navBarBackground:UIColor.whiteColor())
     }
     
@@ -73,7 +73,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    init(items: [UIView], views: [UIView], showPageControl: Bool, navBarBackground: UIColor) {
+    public init(items: [UIView], views: [UIView], showPageControl: Bool, navBarBackground: UIColor) {
         super.init(nibName: nil, bundle: nil)
         needToShowPageControl             = showPageControl
         navigationBarView.backgroundColor = navBarBackground
@@ -97,11 +97,11 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - Constructors with controllers
-    convenience init(controllers: [UIViewController]){
+    public convenience init(controllers: [UIViewController]){
         self.init(controllers: controllers, showPageControl: true, navBarBackground: UIColor.whiteColor())
     }
     
-    convenience init(controllers: [UIViewController], showPageControl: Bool){
+    public convenience init(controllers: [UIViewController], showPageControl: Bool){
         self.init(controllers: controllers, showPageControl: true, navBarBackground: UIColor.whiteColor())
     }
     
@@ -116,7 +116,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    convenience init(controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
+    public convenience init(controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
         var views = [UIView]()
         var items = [UILabel]()
         for ctr in controllers {
@@ -129,10 +129,10 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - Constructors with items & controllers
-    convenience init(items: [UIView], controllers: [UIViewController]){
+    public convenience init(items: [UIView], controllers: [UIViewController]){
         self.init(items: items, controllers: controllers, showPageControl: true, navBarBackground: UIColor.whiteColor())
     }
-    convenience init(items: [UIView], controllers: [UIViewController], showPageControl: Bool){
+    public convenience init(items: [UIView], controllers: [UIViewController], showPageControl: Bool){
         self.init(items: items, controllers: controllers, showPageControl: showPageControl, navBarBackground: UIColor.whiteColor())
     }
     
@@ -146,7 +146,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    convenience init(items: [UIView], controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
+    public convenience init(items: [UIView], controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
         var views = [UIView]()
         for ctr in controllers {
             views.append(ctr.view)
@@ -155,19 +155,19 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - Life cycle
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.setupPagingProcess()
         self.setCurrentIndex(self.indexSelected, animated: false)
     }
     
-    override func didReceiveMemoryWarning() {
+    public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillLayoutSubviews() {
+    public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.navigationBarView.frame = CGRectMake(0, 0, self.SCREENSIZE.width, 44)
     }
@@ -179,7 +179,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @param activate state you want to set to UserInteraction
     */
-    func updateUserInteractionOnNavigation(active: Bool){
+    public func updateUserInteractionOnNavigation(active: Bool){
         self.isUserInteraction = active
     }
     
@@ -189,7 +189,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *  @param index of the wanted page
     *  @param animated animate the moving
     */
-    func setCurrentIndex(index: Int, animated: Bool){
+    public func setCurrentIndex(index: Int, animated: Bool){
         // Be sure we got an existing index
         if(index < 0 || index > self.navigationBarView.subviews.count-1){
             var exc = NSException(name: "Index out of range", reason: "The index is out of range of subviews's countsd!", userInfo: nil)
@@ -278,7 +278,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
     // MARK: - UIScrollViewDelegate
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
         let xOffset = scrollView.contentOffset.x
         let distance = CGFloat(100 + self.navigationSideItemsStyle.rawValue)
         for (i, v) in enumerate(self.navItems) {
@@ -290,11 +290,11 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         self.pagingViewMoving?(subviews: self.navItems)
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         self.sendNewIndex(scrollView)
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         self.sendNewIndex(scrollView)
     }
     
