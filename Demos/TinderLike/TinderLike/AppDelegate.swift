@@ -13,12 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var nav: UINavigationController?
-    var controller: SLPagingViewSwift?
+    var controller: SLPagingViewSwift!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        var orange = UIColor(red: 255/255, green: 69.0/255, blue: 0.0/255, alpha: 1.0)
-        var gray = UIColor(red: 0.84, green: 0.84, blue: 0.84, alpha: 1.0)
+        let orange = UIColor(red: 255/255, green: 69.0/255, blue: 0.0/255, alpha: 1.0)
+        let gray = UIColor(red: 0.84, green: 0.84, blue: 0.84, alpha: 1.0)
         
         var ctr1 = UIViewController()
         ctr1.title = "Ctr1"
@@ -42,25 +42,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var controllers = [ctr1, ctr2, ctr3]
         controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
         
-        controller?.pagingViewMoving = ({ subviews in
-            for v in subviews {
-                var lbl = v as UIImageView
-                var c = gray
+        controller.pagingViewMoving = ({ subviews in
+            for lbl in (subviews as! [UIImageView]) {
+                var c : UIColor!
                 
-                if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
-                    c = self.gradient(Double(lbl.frame.origin.x), topX: Double(46), bottomX: Double(144), initC: orange, goal: gray)
-                }
-                else if (lbl.frame.origin.x > 145 && lbl.frame.origin.x < 245) {
-                    c = self.gradient(Double(lbl.frame.origin.x), topX: Double(146), bottomX: Double(244), initC: gray, goal: orange)
-                }
-                else if(lbl.frame.origin.x == 145){
+                switch (lbl.frame.origin.x) {
+                case 145:
                     c = orange
+                case 46 ... 144:
+                    c = self.gradient(Double(lbl.frame.origin.x), topX: Double(46), bottomX: Double(144), initC: orange, goal: gray)
+                case 146 ... 244:
+                    c = self.gradient(Double(lbl.frame.origin.x), topX: Double(146), bottomX: Double(244), initC: gray, goal: orange)
+                default:
+                    c = gray
                 }
                 lbl.tintColor = c
             }
         })
         
-        self.nav = UINavigationController(rootViewController: self.controller!)
+        self.nav = UINavigationController(rootViewController: self.controller)
         self.window?.rootViewController = self.nav
         self.window?.backgroundColor = UIColor.whiteColor()
         self.window?.makeKeyAndVisible()
