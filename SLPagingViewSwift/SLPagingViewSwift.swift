@@ -83,7 +83,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             let originX       = (self.SCREENSIZE.width/2.0 - vSize.width/2.0) + CGFloat(i * 100)
             v.frame           = CGRectMake(originX, 8, vSize.width, vSize.height)
             v.tag             = i
-            var tap           = UITapGestureRecognizer(target: self, action: "tapOnHeader:")
+            let tap           = UITapGestureRecognizer(target: self, action: "tapOnHeader:")
             v.addGestureRecognizer(tap)
             v.userInteractionEnabled = true
             self.navigationBarView.addSubview(v)
@@ -162,11 +162,6 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         self.setCurrentIndex(self.indexSelected, animated: false)
     }
     
-    public override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.navigationBarView.frame = CGRectMake(0, 0, self.SCREENSIZE.width, 44)
@@ -197,7 +192,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         }
         self.indexSelected = index
         // Get the right position and update it
-        var xOffset = CGFloat(index) * self.SCREENSIZE.width
+        let xOffset = CGFloat(index) * self.SCREENSIZE.width
         self.scrollView.setContentOffset(CGPointMake(xOffset, self.scrollView.contentOffset.y), animated: animated)
     }
     
@@ -254,7 +249,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     }
     
     private func sendNewIndex(scrollView: UIScrollView){
-        var xOffset      = Float(scrollView.contentOffset.x)
+        let xOffset      = Float(scrollView.contentOffset.x)
         var currentIndex = (Int(roundf(xOffset)) % (self.navigationBarView.subviews.count * Int(self.SCREENSIZE.width))) / Int(self.SCREENSIZE.width)
         if self.needToShowPageControl && self.pageControl.currentPage != currentIndex {
             self.pageControl.currentPage = currentIndex
