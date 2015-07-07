@@ -44,21 +44,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate, UITa
         controller.tintPageControlColor = UIColor(white: 0.799, alpha: 1.0)
         controller.pagingViewMovingRedefine = ({ scrollView, subviews in
             var i = 0
-            var xOffset = scrollView.contentOffset.x
-            for lbl in (subviews as! [UILabel]) {
-                var alpha = CGFloat(0)
-                
-                if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
-                    alpha = 1.0 - (xOffset - (CGFloat(i)*320.0)) / 320.0
+            let xOffset = scrollView.contentOffset.x
+            if let lbls = subviews as? [UILabel] {
+                for lbl in lbls {
+                    var alpha : CGFloat = 0
+
+                    if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
+                        alpha = 1.0 - (xOffset - (CGFloat(i)*320.0)) / 320.0
+                    }
+                    else if (lbl.frame.origin.x > 145 && lbl.frame.origin.x < 245) {
+                        alpha = (xOffset - (CGFloat(i)*320.0)) / 320.0 + 1.0
+                    }
+                    else if(lbl.frame.origin.x == 145){
+                        alpha = 1.0
+                    }
+                    lbl.alpha = alpha
+                    i++
                 }
-                else if (lbl.frame.origin.x > 145 && lbl.frame.origin.x < 245) {
-                    alpha = (xOffset - (CGFloat(i)*320.0)) / 320.0 + 1.0
-                }
-                else if(lbl.frame.origin.x == 145){
-                    alpha = 1.0
-                }
-                lbl.alpha = CGFloat(alpha)
-                i++
             }
         })
         

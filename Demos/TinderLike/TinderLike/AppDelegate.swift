@@ -43,20 +43,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
         
         controller.pagingViewMoving = ({ subviews in
-            for lbl in (subviews as! [UIImageView]) {
-                var c : UIColor!
-                
-                switch (lbl.frame.origin.x) {
-                case 145:
-                    c = orange
-                case 46 ... 144:
-                    c = self.gradient(Double(lbl.frame.origin.x), topX: Double(46), bottomX: Double(144), initC: orange, goal: gray)
-                case 146 ... 244:
-                    c = self.gradient(Double(lbl.frame.origin.x), topX: Double(146), bottomX: Double(244), initC: gray, goal: orange)
-                default:
-                    c = gray
+            if let imageViews = subviews as? [UIImageView] {
+                for imgView in imageViews {
+                    var c = gray
+                    let originX = Double(imgView.frame.origin.x)
+                    
+                    if (originX > 45 && originX < 145) {
+                        c = self.gradient(originX, topX: 46, bottomX: 144, initC: orange, goal: gray)
+                    }
+                    else if (originX > 145 && originX < 245) {
+                        c = self.gradient(originX, topX: 146, bottomX: 244, initC: gray, goal: orange)
+                    }
+                    else if(originX == 145){
+                        c = orange
+                    }
+                    imgView.tintColor = c
                 }
-                lbl.tintColor = c
             }
         })
         
