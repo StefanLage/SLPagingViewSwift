@@ -239,7 +239,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             let height                  = self.view.frame.height
             self.scrollView.contentSize = CGSize(width: width, height: height)
             var i: Int                  = 0
-            for (key, v) in self.views {
+            while let v = views[i] {
                 v.frame          = CGRectMake(self.SCREENSIZE.width * CGFloat(i), 0, self.SCREENSIZE.width, self.SCREENSIZE.height)
                 self.scrollView.addSubview(v)
                 i++
