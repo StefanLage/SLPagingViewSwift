@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A1F39B9D-B8F2-4991-A41D-7EC7D7B4A7D6</string>
+	<key>IDESourceControlProjectName</key>
+	<string>TinderLike</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>37BEB7E0617C793883B527F4F18507B85BD66E2E</key>
+		<string>github.com:StefanLage/SLPagingViewSwift.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Demos/TinderLike/TinderLike.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>37BEB7E0617C793883B527F4F18507B85BD66E2E</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:StefanLage/SLPagingViewSwift.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>37BEB7E0617C793883B527F4F18507B85BD66E2E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>37BEB7E0617C793883B527F4F18507B85BD66E2E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SLPagingViewSwift</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate, UITa
             var i = 0
             var xOffset = scrollView.contentOffset.x
             for v in subviews {
-                var lbl = v as UILabel
+                var lbl = v as! UILabel
                 var alpha = CGFloat(0)
                 
                 if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
@@ -129,8 +129,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate, UITa
             cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
             cell?.textLabel?.numberOfLines = 0
         }
-        cell!.imageView?.image = UIImage(named: NSString(format: "avatar_%d.jpg", indexPath.row % 3))
-        cell!.textLabel!.text = self.dataSource?.objectAtIndex(indexPath.row) as String
+        cell!.imageView?.image = UIImage(named: NSString(format: "avatar_%d.jpg", indexPath.row % 3) as String)
+        cell!.textLabel!.text = self.dataSource?.objectAtIndex(indexPath.row) as? String
         
         return cell!
     }

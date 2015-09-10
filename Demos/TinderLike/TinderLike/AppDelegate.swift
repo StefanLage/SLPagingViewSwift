@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         controller?.pagingViewMoving = ({ subviews in
             for v in subviews {
-                var lbl = v as UIImageView
+                var lbl = v as! UIImageView
                 var c = gray
                 
                 if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
