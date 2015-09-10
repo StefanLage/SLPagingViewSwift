@@ -73,16 +73,18 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    init(items: NSArray, views: NSArray, showPageControl: Bool, navBarBackground: UIColor){
-        super.init()
+    init(items: NSArray, views: NSArray, showPageControl: Bool, navBarBackground: UIColor) {
+        
+        super.init(nibName: nil, bundle: nil)
+        
         needToShowPageControl             = showPageControl
         navigationBarView.backgroundColor = navBarBackground
         isUserInteraction                 = true
         var i: Int                        = 0
         for item in items{
             if item.isKindOfClass(UIView.classForCoder()){
-                var v             = item as UIView
-                var vSize: CGSize = v.isKindOfClass(UILabel.classForCoder()) ? self.getLabelSize(v as UILabel) : v.frame.size
+                var v             = item as! UIView
+                var vSize: CGSize = v.isKindOfClass(UILabel.classForCoder()) ? self.getLabelSize(v as! UILabel) : v.frame.size
                 var originX       = (self.SCREENSIZE.width/2.0 - vSize.width/2.0) + CGFloat(i * 100)
                 v.frame           = CGRectMake(originX, 8, vSize.width, vSize.height)
                 v.tag             = i
@@ -100,12 +102,12 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             i = 0
             for controller in views{
                 if controller.isKindOfClass(UIView.classForCoder()){
-                    var ctr = controller as UIView
+                    var ctr = controller as! UIView
                     ctr.tag = i
                     controllerKeys.addObject(NSNumber(integer: i))
                 }
                 else if controller.isKindOfClass(UIViewController.classForCoder()){
-                    var ctr      = controller as UIViewController
+                    var ctr      = controller as! UIViewController
                     ctr.view.tag = i
                     controllerKeys.addObject(NSNumber(integer: i))
                 }
@@ -113,7 +115,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             }
             
             if controllerKeys.count == views.count {
-               self.viewControllers = NSDictionary(objects: views, forKeys: controllerKeys)
+                self.viewControllers = NSDictionary(objects: views as [AnyObject], forKeys: controllerKeys as [AnyObject])
             }
             else{
                 var exc = NSException(name: "View Controllers error", reason: "Some objects in viewControllers are not kind of UIViewController!", userInfo: nil)
@@ -234,7 +236,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     // MARK: - Internal methods
     private func setupPagingProcess() {
         var frame: CGRect                              = CGRectMake(0, 0, SCREENSIZE.width, self.view.frame.height)
-
+        
         self.scrollView                                = UIScrollView(frame: frame)
         self.scrollView.backgroundColor                = UIColor.clearColor()
         self.scrollView.pagingEnabled                  = true
@@ -276,7 +278,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             var i: Int                  = 0
             self.viewControllers.enumerateKeysAndObjectsUsingBlock({ key, obj, stop in
                 var rect: CGRect = CGRectMake(self.SCREENSIZE.width * CGFloat(i), 0, self.SCREENSIZE.width, self.SCREENSIZE.height)
-                var v            = obj as UIView
+                var v            = obj as! UIView
                 v.frame          = rect
                 self.scrollView.addSubview(v)
                 i++
@@ -311,7 +313,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     func tapOnHeader(recognizer: UITapGestureRecognizer){
         if(self.isUserInteraction){
             var key  = recognizer.view?.tag
-            var view = self.viewControllers.objectForKey(NSNumber(integer: key!)) as UIView
+            var view = self.viewControllers.objectForKey(NSNumber(integer: key!)) as! UIView
             self.scrollView.scrollRectToVisible(view.frame, animated: true)
         }
     }
@@ -322,7 +324,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         var xOffset = scrollView.contentOffset.x
         var i       = 0
         for obj in self.navItems {
-            var v:UIView = obj as UIView
+            var v:UIView = obj as! UIView
             var distance = 100 + self.navigationSideItemsStyle.rawValue
             var vSize    = v.frame.size
             var originX  = self.getOriginX(vSize, idx: CGFloat(i), distance: CGFloat(distance), xOffset: CGFloat(xOffset))
