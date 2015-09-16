@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum SLNavigationSideItemsStyle: Int {
+public enum SLNavigationSideItemsStyle: Int {
     case SLNavigationSideItemsStyleOnBounds = 40
     case SLNavigationSideItemsStyleClose = 30
     case SLNavigationSideItemsStyleNormal = 20
@@ -17,49 +17,49 @@ enum SLNavigationSideItemsStyle: Int {
     case SLNavigationSideItemsStyleCloseToEachOne = -40
 }
 
-typealias SLPagingViewMoving = ((subviews: NSArray)-> ())
-typealias SLPagingViewMovingRedefine = ((scrollView: UIScrollView, subviews: NSArray)-> ())
-typealias SLPagingViewDidChanged = ((currentPage: NSInteger)-> ())
+public typealias SLPagingViewMoving = ((subviews: [UIView])-> ())
+public typealias SLPagingViewMovingRedefine = ((scrollView: UIScrollView, subviews: NSArray)-> ())
+public typealias SLPagingViewDidChanged = ((currentPage: Int)-> ())
 
-class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
+public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Public properties
-    var viewControllers: NSDictionary = NSDictionary()
-    var currentPageControlColor: UIColor?
-    var tintPageControlColor: UIColor?
-    var pagingViewMoving: SLPagingViewMoving?
-    var pagingViewMovingRedefine: SLPagingViewMovingRedefine?
-    var didChangedPage: SLPagingViewDidChanged?
-    var navigationSideItemsStyle: SLNavigationSideItemsStyle = .SLNavigationSideItemsStyleDefault
+    var views = [Int : UIView]()
+    public var currentPageControlColor: UIColor?
+    public var tintPageControlColor: UIColor?
+    public var pagingViewMoving: SLPagingViewMoving?
+    public var pagingViewMovingRedefine: SLPagingViewMovingRedefine?
+    public var didChangedPage: SLPagingViewDidChanged?
+    public var navigationSideItemsStyle: SLNavigationSideItemsStyle = .SLNavigationSideItemsStyleDefault
     
     // MARK: - Private properties
     private var SCREENSIZE: CGSize {
         return UIScreen.mainScreen().bounds.size
     }
-    private var scrollView: UIScrollView    = UIScrollView()
-    private var pageControl: UIPageControl  = UIPageControl()
+    private var scrollView: UIScrollView!
+    private var pageControl: UIPageControl!
     private var navigationBarView: UIView   = UIView()
-    private var navItems: NSMutableArray    = NSMutableArray()
+    private var navItems: [UIView]          = []
     private var needToShowPageControl: Bool = false
     private var isUserInteraction: Bool     = false
-    private var indexSelected: NSInteger    = 0
+    private var indexSelected: Int          = 0
     
     // MARK: - Constructors
-    required init(coder decoder: NSCoder) {
+    public required init(coder decoder: NSCoder) {
         super.init(coder: decoder)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Here you can init your properties
     }
     
     // MARK: - Constructors with items & views
-    convenience init(items: NSArray, views: NSArray) {
+    public convenience init(items: [UIView], views: [UIView]) {
         self.init(items: items, views: views, showPageControl:false, navBarBackground:UIColor.whiteColor())
     }
     
-    convenience init(items: NSArray, views: NSArray, showPageControl: Bool){
+    public convenience init(items: [UIView], views: [UIView], showPageControl: Bool){
         self.init(items: items, views: views, showPageControl:showPageControl, navBarBackground:UIColor.whiteColor())
     }
     
@@ -73,61 +73,35 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    init(items: NSArray, views: NSArray, showPageControl: Bool, navBarBackground: UIColor){
-        super.init()
+    public init(items: [UIView], views: [UIView], showPageControl: Bool, navBarBackground: UIColor) {
+        super.init(nibName: nil, bundle: nil)
         needToShowPageControl             = showPageControl
         navigationBarView.backgroundColor = navBarBackground
         isUserInteraction                 = true
-        var i: Int                        = 0
-        for item in items{
-            if item.isKindOfClass(UIView.classForCoder()){
-                var v             = item as UIView
-                var vSize: CGSize = v.isKindOfClass(UILabel.classForCoder()) ? self.getLabelSize(v as UILabel) : v.frame.size
-                var originX       = (self.SCREENSIZE.width/2.0 - vSize.width/2.0) + CGFloat(i * 100)
-                v.frame           = CGRectMake(originX, 8, vSize.width, vSize.height)
-                v.tag             = i
-                var tap           = UITapGestureRecognizer(target: self, action: "tapOnHeader:")
-                v.addGestureRecognizer(tap)
-                v.userInteractionEnabled = true
-                self.navigationBarView.addSubview(v)
-                self.navItems.addObject(v)
-                i++
-            }
+        for (i, v) in enumerate(items) {
+            let vSize: CGSize = (v as? UILabel)?._slpGetSize() ?? v.frame.size
+            let originX       = (self.SCREENSIZE.width/2.0 - vSize.width/2.0) + CGFloat(i * 100)
+            v.frame           = CGRectMake(originX, 8, vSize.width, vSize.height)
+            v.tag             = i
+            let tap           = UITapGestureRecognizer(target: self, action: "tapOnHeader:")
+            v.addGestureRecognizer(tap)
+            v.userInteractionEnabled = true
+            self.navigationBarView.addSubview(v)
+            self.navItems.append(v)
         }
         
-        if (views.count > 0){
-            var controllerKeys = NSMutableArray()
-            i = 0
-            for controller in views{
-                if controller.isKindOfClass(UIView.classForCoder()){
-                    var ctr = controller as UIView
-                    ctr.tag = i
-                    controllerKeys.addObject(NSNumber(integer: i))
-                }
-                else if controller.isKindOfClass(UIViewController.classForCoder()){
-                    var ctr      = controller as UIViewController
-                    ctr.view.tag = i
-                    controllerKeys.addObject(NSNumber(integer: i))
-                }
-                i++
-            }
-            
-            if controllerKeys.count == views.count {
-               self.viewControllers = NSDictionary(objects: views, forKeys: controllerKeys)
-            }
-            else{
-                var exc = NSException(name: "View Controllers error", reason: "Some objects in viewControllers are not kind of UIViewController!", userInfo: nil)
-                exc.raise()
-            }
+        for (i, view) in enumerate(views) {
+            view.tag = i
+            self.views[i] = view
         }
     }
     
     // MARK: - Constructors with controllers
-    convenience init(controllers: NSArray){
+    public convenience init(controllers: [UIViewController]){
         self.init(controllers: controllers, showPageControl: true, navBarBackground: UIColor.whiteColor())
     }
     
-    convenience init(controllers: NSArray, showPageControl: Bool){
+    public convenience init(controllers: [UIViewController], showPageControl: Bool){
         self.init(controllers: controllers, showPageControl: true, navBarBackground: UIColor.whiteColor())
     }
     
@@ -142,25 +116,23 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    convenience init(controllers: NSArray, showPageControl: Bool, navBarBackground: UIColor){
-        var views = NSMutableArray()
-        var items = NSMutableArray()
+    public convenience init(controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
+        var views = [UIView]()
+        var items = [UILabel]()
         for ctr in controllers {
-            if ctr.isKindOfClass(UIViewController.classForCoder()) {
-                views.addObject(ctr)
-                var item  = UILabel()
-                item.text = ctr.title
-                items.addObject(item)
-            }
+            let item  = UILabel()
+            item.text = ctr.title
+            views.append(ctr.view)
+            items.append(item)
         }
         self.init(items: items, views: views, showPageControl:showPageControl, navBarBackground:navBarBackground)
     }
     
     // MARK: - Constructors with items & controllers
-    convenience init(items: NSArray, controllers: NSArray){
+    public convenience init(items: [UIView], controllers: [UIViewController]){
         self.init(items: items, controllers: controllers, showPageControl: true, navBarBackground: UIColor.whiteColor())
     }
-    convenience init(items: NSArray, controllers: NSArray, showPageControl: Bool){
+    public convenience init(items: [UIView], controllers: [UIViewController], showPageControl: Bool){
         self.init(items: items, controllers: controllers, showPageControl: showPageControl, navBarBackground: UIColor.whiteColor())
     }
     
@@ -174,30 +146,23 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    convenience init(items: NSArray, controllers: NSArray, showPageControl: Bool, navBarBackground: UIColor){
-        var views = NSMutableArray()
+    public convenience init(items: [UIView], controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
+        var views = [UIView]()
         for ctr in controllers {
-            if ctr.isKindOfClass(UIViewController.classForCoder()) {
-                views.addObject(ctr.valueForKey("view")!)
-            }
+            views.append(ctr.view)
         }
         self.init(items: items, views: views, showPageControl:showPageControl, navBarBackground:navBarBackground)
     }
     
     // MARK: - Life cycle
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.setupPagingProcess()
         self.setCurrentIndex(self.indexSelected, animated: false)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillLayoutSubviews() {
+    public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.navigationBarView.frame = CGRectMake(0, 0, self.SCREENSIZE.width, 44)
     }
@@ -209,7 +174,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @param activate state you want to set to UserInteraction
     */
-    func updateUserInteractionOnNavigation(active: Bool){
+    public func updateUserInteractionOnNavigation(active: Bool){
         self.isUserInteraction = active
     }
     
@@ -219,7 +184,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *  @param index of the wanted page
     *  @param animated animate the moving
     */
-    func setCurrentIndex(index: NSInteger, animated: Bool){
+    public func setCurrentIndex(index: Int, animated: Bool){
         // Be sure we got an existing index
         if(index < 0 || index > self.navigationBarView.subviews.count-1){
             var exc = NSException(name: "Index out of range", reason: "The index is out of range of subviews's countsd!", userInfo: nil)
@@ -227,7 +192,7 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         }
         self.indexSelected = index
         // Get the right position and update it
-        var xOffset = CGFloat(index) * self.SCREENSIZE.width
+        let xOffset = CGFloat(index) * self.SCREENSIZE.width
         self.scrollView.setContentOffset(CGPointMake(xOffset, self.scrollView.contentOffset.y), animated: animated)
     }
     
@@ -269,34 +234,25 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
     // Loads all views
     private func addViews() {
-        if self.viewControllers.count > 0 {
-            let width                   = SCREENSIZE.width * CGFloat(self.viewControllers.count)
+        if self.views.count > 0 {
+            let width                   = SCREENSIZE.width * CGFloat(self.views.count)
             let height                  = self.view.frame.height
             self.scrollView.contentSize = CGSize(width: width, height: height)
             var i: Int                  = 0
-            self.viewControllers.enumerateKeysAndObjectsUsingBlock({ key, obj, stop in
-                var rect: CGRect = CGRectMake(self.SCREENSIZE.width * CGFloat(i), 0, self.SCREENSIZE.width, self.SCREENSIZE.height)
-                var v            = obj as UIView
-                v.frame          = rect
+            while let v = views[i] {
+                v.frame          = CGRectMake(self.SCREENSIZE.width * CGFloat(i), 0, self.SCREENSIZE.width, self.SCREENSIZE.height)
                 self.scrollView.addSubview(v)
                 i++
-            })
+            }
         }
     }
     
-    private func getLabelSize(lbl: UILabel) -> CGSize{
-        var txt = lbl.text!
-        return txt.sizeWithAttributes([NSFontAttributeName: lbl.font])
-    }
-    
     private func sendNewIndex(scrollView: UIScrollView){
-        var xOffset      = Float(scrollView.contentOffset.x)
+        let xOffset      = Float(scrollView.contentOffset.x)
         var currentIndex = (Int(roundf(xOffset)) % (self.navigationBarView.subviews.count * Int(self.SCREENSIZE.width))) / Int(self.SCREENSIZE.width)
-        if(self.pageControl.currentPage != currentIndex) {
+        if self.needToShowPageControl && self.pageControl.currentPage != currentIndex {
             self.pageControl.currentPage = currentIndex
-            if self.didChangedPage != nil {
-                self.didChangedPage!(currentPage: currentIndex)
-            }
+            self.didChangedPage?(currentPage: currentIndex)
         }
     }
     
@@ -309,40 +265,37 @@ class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
     // Scroll to the view tapped
     func tapOnHeader(recognizer: UITapGestureRecognizer){
-        if(self.isUserInteraction){
-            var key  = recognizer.view?.tag
-            var view = self.viewControllers.objectForKey(NSNumber(integer: key!)) as UIView
+        if let key = recognizer.view?.tag, view = self.views[key] where self.isUserInteraction {
             self.scrollView.scrollRectToVisible(view.frame, animated: true)
         }
     }
     
     // MARK: - UIScrollViewDelegate
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        var xOffset = scrollView.contentOffset.x
-        var i       = 0
-        for obj in self.navItems {
-            var v:UIView = obj as UIView
-            var distance = 100 + self.navigationSideItemsStyle.rawValue
-            var vSize    = v.frame.size
-            var originX  = self.getOriginX(vSize, idx: CGFloat(i), distance: CGFloat(distance), xOffset: CGFloat(xOffset))
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        let xOffset = scrollView.contentOffset.x
+        let distance = CGFloat(100 + self.navigationSideItemsStyle.rawValue)
+        for (i, v) in enumerate(self.navItems) {
+            let vSize    = v.frame.size
+            let originX  = self.getOriginX(vSize, idx: CGFloat(i), distance: CGFloat(distance), xOffset: xOffset)
             v.frame      = CGRectMake(originX, 8, vSize.width, vSize.height)
-            i++
         }
-        if (self.pagingViewMovingRedefine != nil) {
-            self.pagingViewMovingRedefine!(scrollView: scrollView, subviews: self.navItems)
-        }
-        if (self.pagingViewMoving != nil) {
-            self.pagingViewMoving!(subviews: self.navItems)
-        }
+        self.pagingViewMovingRedefine?(scrollView: scrollView, subviews: self.navItems)
+        self.pagingViewMoving?(subviews: self.navItems)
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         self.sendNewIndex(scrollView)
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         self.sendNewIndex(scrollView)
     }
     
+}
+
+extension UILabel {
+    func _slpGetSize() -> CGSize? {
+        return (text as NSString?)?.sizeWithAttributes([NSFontAttributeName: font])
+    }
 }

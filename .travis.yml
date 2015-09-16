@@ -1,0 +1,10 @@
+language: objective-c
+osx_image: beta-xcode6.3
+
+before_install:
+  - brew update
+  - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
+
+script:
+  - xctool clean build -project Demos/TwitterLike/TwitterLike.xcodeproj -scheme TwitterLike -sdk iphonesimulator
+  - xctool clean build -project Demos/TinderLike/TinderLike.xcodeproj -scheme TinderLike -sdk iphonesimulator

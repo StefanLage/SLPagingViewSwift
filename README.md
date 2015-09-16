@@ -9,8 +9,9 @@ A navigation bar system allowing to do a Tinder like or Twitter like. SLPagingVi
 
 ## Requirements
 
-* iOS 7.0+ 
+* iOS 7.0+
 * ARC
+* Swift 1.2
 
 ## Installation
 
@@ -47,7 +48,7 @@ Easy to implement:
 	img2 = img2?.imageWithRenderingMode(.AlwaysTemplate)
 	var img3 = UIImage(named: "chat")
 	img3 = img3?.imageWithRenderingMode(.AlwaysTemplate)
-    
+
     var items = [UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
 	var controllers = [ctr1, ctr2, ctr3]
 	controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
@@ -63,7 +64,7 @@ Then you can make your own behaviors:
 		for v in subviews {
 			var lbl = v as UIImageView
             var c = gray
-                
+
 			if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
 				c = self.gradient(Double(lbl.frame.origin.x), topX: Double(46), bottomX: Double(144), initC: orange, goal: gray)
 			}
@@ -92,7 +93,7 @@ Twitter like behaviors
 		for v in subviews {
 			var lbl = v as UILabel
 			var alpha = CGFloat(0)
-                
+
 			if(lbl.frame.origin.x > 45 && lbl.frame.origin.x < 145) {
 				alpha = 1.0 - (xOffset - (CGFloat(i)*320.0)) / 320.0
 			}
@@ -116,7 +117,7 @@ If you want to changed the default page control index (or whatever) you can do i
 
 ```swift
 
-	func setCurrentIndex(index: NSInteger, animated: Bool)
+	func setCurrentIndex(index: Int, animated: Bool)
 ````
 
 ###Navigation items style
