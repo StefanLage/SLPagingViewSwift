@@ -20,13 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let orange = UIColor(red: 255/255, green: 69.0/255, blue: 0.0/255, alpha: 1.0)
         let gray = UIColor(red: 0.84, green: 0.84, blue: 0.84, alpha: 1.0)
         
-        var ctr1 = UIViewController()
+        let ctr1 = UIViewController()
         ctr1.title = "Ctr1"
         ctr1.view.backgroundColor = orange
-        var ctr2 = UIViewController()
+        let ctr2 = UIViewController()
         ctr2.title = "Ctr2"
         ctr2.view.backgroundColor = UIColor.yellowColor()
-        var ctr3 = UIViewController()
+        let ctr3 = UIViewController()
         ctr3.title = "Ctr3"
         ctr3.view.backgroundColor = gray
         
@@ -38,8 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         img3 = img3?.imageWithRenderingMode(.AlwaysTemplate)
         
         
-        var items = [UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
-        var controllers = [ctr1, ctr2, ctr3]
+        let items = [UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
+        let controllers = [ctr1, ctr2, ctr3]
         controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
         
         controller.pagingViewMoving = ({ subviews in
@@ -92,21 +92,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func viewWithBackground(color: UIColor) -> UIView{
-        var v = UIView()
+        let v = UIView()
         v.backgroundColor = color
         return v
     }
     
     func gradient(percent: Double, topX: Double, bottomX: Double, initC: UIColor, goal: UIColor) -> UIColor{
-        var t = (percent - bottomX) / (topX - bottomX)
+        let t = (percent - bottomX) / (topX - bottomX)
         
         let cgInit = CGColorGetComponents(initC.CGColor)
         let cgGoal = CGColorGetComponents(goal.CGColor)
         
         
-        var r = cgInit[0] + CGFloat(t) * (cgGoal[0] - cgInit[0])
-        var g = cgInit[1] + CGFloat(t) * (cgGoal[1] - cgInit[1])
-        var b = cgInit[2] + CGFloat(t) * (cgGoal[2] - cgInit[2])
+        let r = cgInit[0] + CGFloat(t) * (cgGoal[0] - cgInit[0])
+        let g = cgInit[1] + CGFloat(t) * (cgGoal[1] - cgInit[1])
+        let b = cgInit[2] + CGFloat(t) * (cgGoal[2] - cgInit[2])
         
         return UIColor(red: r, green: g, blue: b, alpha: 1.0)
     }

@@ -11,7 +11,7 @@ A navigation bar system allowing to do a Tinder like or Twitter like. SLPagingVi
 
 * iOS 7.0+
 * ARC
-* Swift 1.2
+* Swift 2.0
 
 ## Installation
 
