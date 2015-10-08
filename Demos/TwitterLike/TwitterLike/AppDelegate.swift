@@ -25,15 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate, UITa
             "Hello world!", "Shaqtin' a fool!", "YEAHHH!",
             "Hello world!", "Shaqtin' a fool!", "YEAHHH!"]
         
-        var navTitleLabel1 = UILabel()
+        let navTitleLabel1 = UILabel()
         navTitleLabel1.text = "Home"
         navTitleLabel1.font = UIFont(name: "Helvetica", size: 20)
         navTitleLabel1.textColor = UIColor.whiteColor()
-        var navTitleLabel2 = UILabel()
+        let navTitleLabel2 = UILabel()
         navTitleLabel2.text = "Discover"
         navTitleLabel2.font = UIFont(name: "Helvetica", size: 20)
         navTitleLabel2.textColor = UIColor.whiteColor()
-        var navTitleLabel3 = UILabel()
+        let navTitleLabel3 = UILabel()
         navTitleLabel3.text = "Activity"
         navTitleLabel3.font = UIFont(name: "Helvetica", size: 20)
         navTitleLabel3.textColor = UIColor.whiteColor()
@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate, UITa
         })
         
         controller.didChangedPage = ({ currentIndex in
-            println(currentIndex)
+            print(currentIndex)
         })
         
         
@@ -102,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate, UITa
     func tableView() -> UITableView {
         var frame = CGRectMake(0, 0, 320, 568)
         frame.size.height -= 44
-        var tableView = UITableView(frame: frame, style: .Plain)
+        let tableView = UITableView(frame: frame, style: .Plain)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.scrollsToTop = false
@@ -124,8 +124,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cellIdentifier = "cellIdentifier"
-        var cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
+        let cellIdentifier = "cellIdentifier"
+        var cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as UITableViewCell!
         if cell == nil {
             cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
             cell?.textLabel?.numberOfLines = 0

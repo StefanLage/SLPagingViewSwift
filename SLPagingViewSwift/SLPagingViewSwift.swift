@@ -45,7 +45,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     private var indexSelected: Int          = 0
     
     // MARK: - Constructors
-    public required init(coder decoder: NSCoder) {
+    public required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
     }
     
@@ -78,7 +78,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         needToShowPageControl             = showPageControl
         navigationBarView.backgroundColor = navBarBackground
         isUserInteraction                 = true
-        for (i, v) in enumerate(items) {
+        for (i, v) in items.enumerate() {
             let vSize: CGSize = (v as? UILabel)?._slpGetSize() ?? v.frame.size
             let originX       = (self.SCREENSIZE.width/2.0 - vSize.width/2.0) + CGFloat(i * 100)
             v.frame           = CGRectMake(originX, 8, vSize.width, vSize.height)
@@ -90,7 +90,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             self.navItems.append(v)
         }
         
-        for (i, view) in enumerate(views) {
+        for (i, view) in views.enumerate() {
             view.tag = i
             self.views[i] = view
         }
@@ -187,7 +187,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     public func setCurrentIndex(index: Int, animated: Bool){
         // Be sure we got an existing index
         if(index < 0 || index > self.navigationBarView.subviews.count-1){
-            var exc = NSException(name: "Index out of range", reason: "The index is out of range of subviews's countsd!", userInfo: nil)
+            let exc = NSException(name: "Index out of range", reason: "The index is out of range of subviews's countsd!", userInfo: nil)
             exc.raise()
         }
         self.indexSelected = index
@@ -198,7 +198,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Internal methods
     private func setupPagingProcess() {
-        var frame: CGRect                              = CGRectMake(0, 0, SCREENSIZE.width, self.view.frame.height)
+        let frame: CGRect                              = CGRectMake(0, 0, SCREENSIZE.width, self.view.frame.height)
 
         self.scrollView                                = UIScrollView(frame: frame)
         self.scrollView.backgroundColor                = UIColor.clearColor()
@@ -249,7 +249,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
     private func sendNewIndex(scrollView: UIScrollView){
         let xOffset      = Float(scrollView.contentOffset.x)
-        var currentIndex = (Int(roundf(xOffset)) % (self.navigationBarView.subviews.count * Int(self.SCREENSIZE.width))) / Int(self.SCREENSIZE.width)
+        let currentIndex = (Int(roundf(xOffset)) % (self.navigationBarView.subviews.count * Int(self.SCREENSIZE.width))) / Int(self.SCREENSIZE.width)
         if self.needToShowPageControl && self.pageControl.currentPage != currentIndex {
             self.pageControl.currentPage = currentIndex
             self.didChangedPage?(currentPage: currentIndex)
@@ -275,7 +275,7 @@ public class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         let xOffset = scrollView.contentOffset.x
         let distance = CGFloat(100 + self.navigationSideItemsStyle.rawValue)
-        for (i, v) in enumerate(self.navItems) {
+        for (i, v) in self.navItems.enumerate() {
             let vSize    = v.frame.size
             let originX  = self.getOriginX(vSize, idx: CGFloat(i), distance: CGFloat(distance), xOffset: xOffset)
             v.frame      = CGRectMake(originX, 8, vSize.width, vSize.height)
