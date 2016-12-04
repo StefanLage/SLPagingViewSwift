@@ -12,6 +12,7 @@
 		F85CA98D1A618E180013CF3F /* TwitterLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85CA98C1A618E180013CF3F /* TwitterLikeTests.swift */; };
 		F85CA9981A618E790013CF3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F85CA9971A618E790013CF3F /* Default-568h@2x.png */; };
 		F85CA9D11A6198F10013CF3F /* SLPagingViewSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85CA9D01A6198F10013CF3F /* SLPagingViewSwift.swift */; };
+		FC7D60CB1DF451FC00700038 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D60CA1DF451FC00700038 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		F85CA9961A618E610013CF3F /* TwitterLike-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TwitterLike-Prefix.pch"; sourceTree = "<group>"; };
 		F85CA9971A618E790013CF3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		F85CA9D01A6198F10013CF3F /* SLPagingViewSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SLPagingViewSwift.swift; path = ../../SLPagingViewSwift/SLPagingViewSwift.swift; sourceTree = "<group>"; };
+		FC7D60CA1DF451FC00700038 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				F85CA9761A618E180013CF3F /* AppDelegate.swift */,
+				FC7D60CA1DF451FC00700038 /* TableViewController.swift */,
 				F85CA97D1A618E180013CF3F /* Images.xcassets */,
 				F85CA9741A618E180013CF3F /* Supporting Files */,
 			);
@@ -163,14 +166,16 @@
 		F85CA9691A618E170013CF3F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Stefan Lage";
 				TargetAttributes = {
 					F85CA9701A618E180013CF3F = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0810;
 					};
 					F85CA9851A618E180013CF3F = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = F85CA9701A618E180013CF3F;
 					};
 				};
@@ -219,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F85CA9771A618E180013CF3F /* AppDelegate.swift in Sources */,
+				FC7D60CB1DF451FC00700038 /* TableViewController.swift in Sources */,
 				F85CA9D11A6198F10013CF3F /* SLPagingViewSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,15 +261,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -297,8 +307,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -306,6 +318,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -315,6 +328,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -325,7 +339,9 @@
 				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/TwitterLike-Prefix.pch";
 				INFOPLIST_FILE = TwitterLike/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "SL.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -335,7 +351,9 @@
 				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/TwitterLike-Prefix.pch";
 				INFOPLIST_FILE = TwitterLike/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "SL.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -353,7 +371,9 @@
 				);
 				INFOPLIST_FILE = TwitterLikeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "SL.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TwitterLike.app/TwitterLike";
 			};
 			name = Debug;
@@ -368,7 +388,9 @@
 				);
 				INFOPLIST_FILE = TwitterLikeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "SL.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TwitterLike.app/TwitterLike";
 			};
 			name = Release;
