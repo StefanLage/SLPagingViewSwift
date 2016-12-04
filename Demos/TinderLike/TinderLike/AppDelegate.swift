@@ -43,9 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         img3 = img3?.withRenderingMode(.alwaysTemplate)
         
         
-        let items = [UIImageView(image: img0), UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
+        let barItems = [UIImageView(image: img0), UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
         let controllers = [ctr0, ctr1, ctr2, ctr3]
-        controller = SLPagingViewSwift(items: items, controllers: controllers, showPageControl: false)
+        controller = SLPagingViewSwift(barItems: barItems, controllers: controllers, showPageControl: false)
         
         controller.pagingViewMoving = ({ subviews in
             if let imageViews = subviews as? [UIImageView] {

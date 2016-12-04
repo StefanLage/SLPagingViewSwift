@@ -55,12 +55,12 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - Constructors with items & views
-    public convenience init(items: [UIView], views: [UIViewController]) {
-        self.init(items: items, views: views, showPageControl:false, navBarBackground:UIColor.white)
+    public convenience init(barItems: [UIView], viewControllers: [UIViewController]) {
+        self.init(barItems: barItems, views: viewControllers, showPageControl:false, navBarBackground:UIColor.white)
     }
     
-    public convenience init(items: [UIView], views: [UIViewController], showPageControl: Bool){
-        self.init(items: items, views: views, showPageControl:showPageControl, navBarBackground:UIColor.white)
+    public convenience init(barItems: [UIView], viewControllers: [UIViewController], showPageControl: Bool){
+        self.init(barItems: barItems, views: viewControllers, showPageControl:showPageControl, navBarBackground:UIColor.white)
     }
     
     /*
@@ -73,12 +73,12 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    public init(items: [UIView], views: [UIViewController], showPageControl: Bool, navBarBackground: UIColor) {
+    public init(barItems: [UIView], views: [UIViewController], showPageControl: Bool, navBarBackground: UIColor) {
         super.init(nibName: nil, bundle: nil)
         needToShowPageControl             = showPageControl
         navigationBarView.backgroundColor = navBarBackground
         isUserInteraction                 = true
-        for (i, v) in items.enumerated() {
+        for (i, v) in barItems.enumerated() {
             let vSize: CGSize = (v as? UILabel)?._slpGetSize() ?? v.frame.size
             let originX       = (self.SCREENSIZE.width/2.0 - vSize.width/2.0) + CGFloat(i * 100)
             v.frame           = CGRect(x: originX, y: 8, width: vSize.width, height: vSize.height)
@@ -98,11 +98,11 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Constructors with controllers
     public convenience init(controllers: [UIViewController]){
-        self.init(controllers: controllers, showPageControl: true, navBarBackground: UIColor.white)
+        self.init(viewControllers: controllers, showPageControl: true, navBarBackground: UIColor.white)
     }
     
     public convenience init(controllers: [UIViewController], showPageControl: Bool){
-        self.init(controllers: controllers, showPageControl: true, navBarBackground: UIColor.white)
+        self.init(viewControllers: controllers, showPageControl: true, navBarBackground: UIColor.white)
     }
     
     /*
@@ -116,24 +116,24 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    public convenience init(controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
+    public convenience init(viewControllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
         var views = [UIView]()
         var items = [UILabel]()
-        for ctr in controllers {
+        for ctr in viewControllers {
             let item  = UILabel()
             item.text = ctr.title
             views.append(ctr.view)
             items.append(item)
         }
-        self.init(items: items, views: controllers, showPageControl:showPageControl, navBarBackground:navBarBackground)
+        self.init(barItems: items, views: viewControllers, showPageControl:showPageControl, navBarBackground:navBarBackground)
     }
     
     // MARK: - Constructors with items & controllers
-    public convenience init(items: [UIView], controllers: [UIViewController]){
-        self.init(items: items, controllers: controllers, showPageControl: true, navBarBackground: UIColor.white)
+    public convenience init(barItems: [UIView], controllers: [UIViewController]){
+        self.init(barItems: barItems, controllers: controllers, showPageControl: true, navBarBackground: UIColor.white)
     }
-    public convenience init(items: [UIView], controllers: [UIViewController], showPageControl: Bool){
-        self.init(items: items, controllers: controllers, showPageControl: showPageControl, navBarBackground: UIColor.white)
+    public convenience init(barItems: [UIView], controllers: [UIViewController], showPageControl: Bool){
+        self.init(barItems: barItems, controllers: controllers, showPageControl: showPageControl, navBarBackground: UIColor.white)
     }
     
     /*
@@ -146,12 +146,12 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     *
     *  @return Instance of SLPagingViewController
     */
-    public convenience init(items: [UIView], controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
+    public convenience init(barItems: [UIView], controllers: [UIViewController], showPageControl: Bool, navBarBackground: UIColor){
         var views = [UIView]()
         for ctr in controllers {
             views.append(ctr.view)
         }
-        self.init(items: items, views: controllers, showPageControl:showPageControl, navBarBackground:navBarBackground)
+        self.init(barItems: barItems, views: controllers, showPageControl:showPageControl, navBarBackground:navBarBackground)
     }
     
     // MARK: - Life cycle
@@ -195,7 +195,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         let xOffset = CGFloat(index) * self.SCREENSIZE.width
         self.scrollView.setContentOffset(CGPoint(x: xOffset, y: self.scrollView.contentOffset.y), animated: animated)
         
-        showPage(at: self.indexSelected)
+        showViewController(at: self.indexSelected)
     }
     
     // MARK: - Internal methods
@@ -214,7 +214,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         self.view.addSubview(self.scrollView)
         
         // Adds all views
-        self.addViews()
+        self.setViewSizeAndLocation()
         
         if(self.needToShowPageControl){
             // Make the page control
@@ -234,8 +234,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         
     }
     
-    // Loads all views
-    fileprivate func addViews() {
+    fileprivate func setViewSizeAndLocation() {
         if self.viewControllers.count > 0 {
             let width                   = SCREENSIZE.width * CGFloat(self.viewControllers.count)
             let height                  = self.view.frame.height
@@ -243,29 +242,25 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             var i: Int                  = 0
             while let v = viewControllers[i] {
                 v.view.frame          = CGRect(x: self.SCREENSIZE.width * CGFloat(i), y: 0, width: self.SCREENSIZE.width, height: self.SCREENSIZE.height)
-//                self.scrollView.addSubview(v)
                 i += 1
             }
         }
     }
-    func showPage(at index:Int) -> Void {
+    func showViewController(at index:Int) -> Void {
         
         if let prevVC = self.viewControllers[self.indexSelected] , prevVC.parent == self {
             
             prevVC.willMove(toParentViewController: nil)
         }
         if let nextVC = self.viewControllers[index] , nextVC.parent == nil {
-            NSLog("show page = \(index)")
-            
             nextVC.willMove(toParentViewController: self)
             self.addChildViewController(nextVC)
             self.scrollView.addSubview(nextVC.view)
-            nextVC.didMove(toParentViewController: self)
-            
+            nextVC.didMove(toParentViewController: self)            
         }
         
     }
-    func hidePage(at index:Int) -> Void {
+    func hideViewController(at index:Int) -> Void {
         
         if let prevVC = self.viewControllers[index] , prevVC.parent == self {
             
@@ -275,8 +270,6 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             prevVC.didMove(toParentViewController: nil)
             
         }
-        
-        
         
     }
 
@@ -289,7 +282,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         }
         let prevIndex = self.indexSelected
         self.indexSelected = currentIndex
-        hidePage(at: prevIndex)
+        hideViewController(at: prevIndex)
 
     }
     
@@ -304,7 +297,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     func tapOnHeader(_ recognizer: UITapGestureRecognizer){
         if let key = recognizer.view?.tag, let view = self.viewControllers[key], self.isUserInteraction {
             self.scrollView.scrollRectToVisible(view.view.frame, animated: true)
-            showPage(at: key)
+            showViewController(at: key)
         }
     }
     
@@ -342,7 +335,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         
         let nextIndex = xOffset / W + direction
         
-        showPage(at: nextIndex)
+        showViewController(at: nextIndex)
         
     }
     
