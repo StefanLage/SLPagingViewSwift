@@ -256,7 +256,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             nextVC.willMove(toParentViewController: self)
             self.addChildViewController(nextVC)
             self.scrollView.addSubview(nextVC.view)
-            nextVC.didMove(toParentViewController: self)            
+            nextVC.didMove(toParentViewController: self)
         }
         
     }
@@ -280,9 +280,22 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             self.pageControl.currentPage = currentIndex
             self.didChangedPage?(currentIndex)
         }
-        let prevIndex = self.indexSelected
-        self.indexSelected = currentIndex
-        hideViewController(at: prevIndex)
+        if currentIndex != self.indexSelected {
+            let prevIndex = self.indexSelected
+            self.indexSelected = currentIndex
+            hideViewController(at: prevIndex)
+        }
+        else{//scroll was canceled
+            
+            for (i,vc) in self.viewControllers {
+                if let parent = vc.view.superview , parent == self, i != self.indexSelected
+                {
+                    hideViewController(at: i)
+                    break
+                }
+            }
+        }
+        
 
     }
     
