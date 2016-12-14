@@ -160,6 +160,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         self.setupPagingProcess()
         self.setCurrentIndex(self.indexSelected, animated: false)
+        self.view.backgroundColor = UIColor.white
     }
     
     open override func viewWillLayoutSubviews() {
@@ -208,7 +209,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.scrollView.showsVerticalScrollIndicator   = false
         self.scrollView.delegate                       = self
-        self.scrollView.bounces                        = false
+        self.scrollView.bounces                        = true
         self.scrollView.contentInset                   = UIEdgeInsets(top: 0, left: 0, bottom: -80, right: 0)
         
         self.view.addSubview(self.scrollView)
