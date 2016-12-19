@@ -180,10 +180,12 @@
 				TargetAttributes = {
 					F85CA9A41A61963B0013CF3F = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = M4BCYUQAZQ;
 						LastSwiftMigration = 0810;
 					};
 					F85CA9B91A61963B0013CF3F = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = M4BCYUQAZQ;
 						LastSwiftMigration = 0810;
 						TestTargetID = F85CA9A41A61963B0013CF3F;
 					};
@@ -348,6 +350,7 @@
 		F85CA9C51A61963B0013CF3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = M4BCYUQAZQ;
 				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/TinderLike-Prefix.pch";
 				INFOPLIST_FILE = TinderLike/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -360,6 +363,7 @@
 		F85CA9C61A61963B0013CF3F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = M4BCYUQAZQ;
 				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/TinderLike-Prefix.pch";
 				INFOPLIST_FILE = TinderLike/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -373,6 +377,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = M4BCYUQAZQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -394,6 +399,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = M4BCYUQAZQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

@@ -13,6 +13,18 @@ class VC3: UIViewController {
     
     override func viewDidLoad() {
         NSLog("viewDidLoad       - 3")
+        let button = UIButton(type: .contactAdd)
+        button.backgroundColor = .green
+        button.setTitle("Test Button", for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+
+        
+        
+        self.view.addSubview(button)
+    }
+    func buttonAction(sender: UIButton!) {
+        
+        self.navigationController?.pushViewController(VC0(), animated: true)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

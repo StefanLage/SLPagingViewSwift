@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let orange = UIColor(red: 255/255, green: 69.0/255, blue: 0.0/255, alpha: 1.0)
+//        let orange = UIColor(red: 255/255, green: 69.0/255, blue: 0.0/255, alpha: 1.0)
+        let orange = UIColor(red: 0/255, green: 0.0/255, blue: 255.0/255, alpha: 1.0)
         let gray = UIColor(red: 0.84, green: 0.84, blue: 0.84, alpha: 1.0)
         
         let ctr0 = VC0()
@@ -33,36 +34,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ctr3.title = "Ctr3"
         ctr3.view.backgroundColor = gray
         
-        var img0 = UIImage(named: "chat")
+        var img0 = UIImage(named: "nav_back_left")
         img0 = img0?.withRenderingMode(.alwaysTemplate)
-        var img1 = UIImage(named: "gear")
+        var img1 = UIImage(named: "nav_back_left")
         img1 = img1?.withRenderingMode(.alwaysTemplate)
-        var img2 = UIImage(named: "profile")
+        var img2 = UIImage(named: "nav_back_left")
         img2 = img2?.withRenderingMode(.alwaysTemplate)
-        var img3 = UIImage(named: "chat")
+        var img3 = UIImage(named: "nav_back_left")
         img3 = img3?.withRenderingMode(.alwaysTemplate)
         
+        var imgSelected0 = UIImage(named: "chat")
+        imgSelected0 = imgSelected0?.withRenderingMode(.alwaysTemplate)
+        var imgSelected1 = UIImage(named: "gear")
+        imgSelected1 = imgSelected1?.withRenderingMode(.alwaysTemplate)
+        var imgSelected2 = UIImage(named: "profile")
+        imgSelected2 = imgSelected2?.withRenderingMode(.alwaysTemplate)
+        var imgSelected3 = UIImage(named: "chat")
+        imgSelected3 = imgSelected3?.withRenderingMode(.alwaysTemplate)
         
+        
+        let barItemsSelected = [UIImageView(image: imgSelected0), UIImageView(image: imgSelected1), UIImageView(image: imgSelected2), UIImageView(image: imgSelected3)]
         let barItems = [UIImageView(image: img0), UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
-        let controllers = [ctr0, ctr1, ctr2, ctr3]
-        controller = SLPagingViewSwift(barItems: barItems, controllers: controllers, showPageControl: false)
+//        for v in barItems
+//        {
+//            AppDelegate.addLayer(view: v)
+//        }
         
+        let controllers = [ctr0, ctr1, ctr2, ctr3]
+        controller = SLPagingViewSwift(barItems: barItems, barItemsSelected: barItemsSelected, controllers: controllers, showPageControl: false)
+        controller.navigationSideItemsStyle = .slNavigationSideItemsStyleOnBounds
+        controller.pagingViewMovingRedefine = (  { scrollView, subviews in
+          
+        })
         controller.pagingViewMoving = ({ subviews in
-            if let imageViews = subviews as? [UIImageView] {
-                for imgView in imageViews {
-                    var c = gray
-                    let originX = Double(imgView.frame.origin.x)
+            
+            if let navBarItems = subviews as? [NavBarHeader] {
+                for navBarItem in navBarItems {
                     
-                    if (originX > 45 && originX < 145) {
-                        c = self.gradient(originX, topX: 46, bottomX: 144, initC: orange, goal: gray)
+                    let originX = CGFloat(navBarItem.frame.origin.x)
+
+                    let distance = CGFloat( self.controller.navigationSideItemsStyle.rawValue)
+                    
+                    let vSize    = navBarItem.frame.size
+                    let margin  = self.controller.getOriginX(vSize, idx: CGFloat(navBarItem.tag), distance: CGFloat(distance), xOffset: 0)-100
+                    
+                    
+                    let screenCenter = CGFloat(UIScreen.main.bounds.width/2)
+                    let scale = CGFloat(screenCenter-margin)
+                    let xOnScale = CGFloat(abs(originX - screenCenter))
+                    let alpha = xOnScale/scale
+                    
+                    if navBarItem.tag == 0
+                    {
+                        print("originX: \(originX) alpha: \(alpha) xOnScale: \(xOnScale) scale:\(scale) margin: \(margin)" )
                     }
-                    else if (originX > 145 && originX < 245) {
-                        c = self.gradient(originX, topX: 146, bottomX: 244, initC: gray, goal: orange)
-                    }
-                    else if(originX == 145){
-                        c = orange
-                    }
-                    imgView.tintColor = c
+                    
+//                    let alpha = CGFloat(abs(originX - 145))/(145-45)
+                    navBarItem.regularView.alpha = alpha
+                    navBarItem.selectedView.alpha = 1.0 - alpha
                 }
             }
         })
