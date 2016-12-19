@@ -21,30 +21,60 @@ public typealias SLPagingViewMoving = ((_ subviews: [UIView])-> ())
 public typealias SLPagingViewMovingRedefine = ((_ scrollView: UIScrollView, _ subviews: NSArray)-> ())
 public typealias SLPagingViewDidChanged = ((_ currentPage: Int)-> ())
 
-class NavBarHeader: UIView {
+open class NavBarHeader: UIView {
     
-    var regularView:UIView
-    var selectedView:UIView
+    open var regularView:UIView
+    open var selectedView:UIView
     
-     init( regularView:UIView, selectedView:UIView) {
-
+    init( regularView:UIView, selectedView:UIView) {
+        
         self.regularView = regularView
         self.selectedView = selectedView
         super.init(frame: CGRect.zero)//(x: 0, y: 0, width: 0, height: 0))
         
-        self.addSubview(self.regularView)
         self.addSubview(self.selectedView)
+        self.addSubview(self.regularView)
         
-//        setSelected(perc: 0)
+        self.selectedView.backgroundColor = UIColor.red
+        self.regularView.backgroundColor = UIColor.brown
+        
+        self.backgroundColor = UIColor.black
+        
+        self.frame.size = self.recomandedSize()
+        
+        //        setSelected(perc: 0)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     func setSelected(perc:CGFloat) -> Void {
         
         self.regularView.alpha = 1 - perc
         self.selectedView.alpha = perc
+    }
+    func recomandedSize() -> CGSize {
+        let size = CGSize(width: max(self.regularView.frame.size.width,self.selectedView.frame.size.width),
+                          height:max(self.regularView.frame.size.height,self.selectedView.frame.size.height))
+        
+        return size;
+    }
+//    open override func layoutIfNeeded() {
+//        self.frame.size = self.recomandedSize()
+//        self.frame.origin = CGPoint(x:0, y:0)
+//    }
+    override open func layoutSubviews()
+    {
+        super.layoutSubviews()
+        
+        
+        self.regularView.frame.origin = CGPoint(x: (self.frame.size.width - self.regularView.frame.size.width)/2,
+                                                y: (self.frame.size.height - self.regularView.frame.size.height)/2)
+        
+        let selSize = (self.selectedView as? UILabel)?._slpGetSize() ?? self.selectedView.frame.size
+        
+        self.selectedView.frame.origin = CGPoint(x: (self.frame.size.width - selSize.width)/2,
+                                                y: (self.frame.size.height - selSize.height)/2)
     }
 }
 open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
@@ -62,7 +92,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     fileprivate var SCREENSIZE: CGSize {
         return UIScreen.main.bounds.size
     }
-    open var scrollView: UIScrollView!
+    fileprivate var scrollView: UIScrollView!
     fileprivate var pageControl: UIPageControl!
     fileprivate var navigationBarView: UIView   = UIView()
     fileprivate var navItems: [NavBarHeader]          = []
@@ -90,21 +120,22 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     }
     
     /*
-    *  SLPagingViewController's constructor
-    *
-    *  @param items should contain all subviews of the navigation bar
-    *  @param navBarBackground navigation bar's background color
-    *  @param views all subviews corresponding to each page
-    *  @param showPageControl inform if we need to display the page control in the navigation bar
-    *
-    *  @return Instance of SLPagingViewController
-    */
+     *  SLPagingViewController's constructor
+     *
+     *  @param items should contain all subviews of the navigation bar
+     *  @param navBarBackground navigation bar's background color
+     *  @param views all subviews corresponding to each page
+     *  @param showPageControl inform if we need to display the page control in the navigation bar
+     *
+     *  @return Instance of SLPagingViewController
+     */
     
     public init(barItems: [UIView], barItemsSelected: [UIView], views: [UIViewController], showPageControl: Bool, navBarBackground: UIColor) {
         super.init(nibName: nil, bundle: nil)
         
         needToShowPageControl             = showPageControl
         navigationBarView.backgroundColor = navBarBackground
+        UINavigationBar.appearance().barTintColor = navBarBackground
         isUserInteraction                 = true
         
         for (i, vRegular) in barItems.enumerated() {
@@ -320,7 +351,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         }
         
     }
-
+    
     fileprivate func sendNewIndex(_ scrollView: UIScrollView){
         let xOffset      = Float(scrollView.contentOffset.x)
         let currentIndex = (Int(roundf(xOffset)) % (self.navigationBarView.subviews.count * Int(self.SCREENSIZE.width))) / Int(self.SCREENSIZE.width)

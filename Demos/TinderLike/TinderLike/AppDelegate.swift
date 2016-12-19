@@ -30,18 +30,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let ctr2 = VC2()
         ctr2.title = "Ctr2"
         ctr2.view.backgroundColor = UIColor.yellow
-        let ctr3 = VC3()
-        ctr3.title = "Ctr3"
-        ctr3.view.backgroundColor = gray
+        //let ctr3 = VC3()
+        //ctr3.title = "Ctr3"
+        //ctr3.view.backgroundColor = gray
         
-        var img0 = UIImage(named: "nav_back_left")
+        var img0 = UIImage(named: "chat")
         img0 = img0?.withRenderingMode(.alwaysTemplate)
-        var img1 = UIImage(named: "nav_back_left")
+        var img1 = UIImage(named: "nav_forward")
         img1 = img1?.withRenderingMode(.alwaysTemplate)
-        var img2 = UIImage(named: "nav_back_left")
+        var img2 = UIImage(named: "profile")
         img2 = img2?.withRenderingMode(.alwaysTemplate)
-        var img3 = UIImage(named: "nav_back_left")
-        img3 = img3?.withRenderingMode(.alwaysTemplate)
+//        var img3 = UIImage(named: "nav_back_left")
+//        img3 = img3?.withRenderingMode(.alwaysTemplate)
         
         var imgSelected0 = UIImage(named: "chat")
         imgSelected0 = imgSelected0?.withRenderingMode(.alwaysTemplate)
@@ -49,18 +49,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         imgSelected1 = imgSelected1?.withRenderingMode(.alwaysTemplate)
         var imgSelected2 = UIImage(named: "profile")
         imgSelected2 = imgSelected2?.withRenderingMode(.alwaysTemplate)
-        var imgSelected3 = UIImage(named: "chat")
-        imgSelected3 = imgSelected3?.withRenderingMode(.alwaysTemplate)
+//        var imgSelected3 = UIImage(named: "chat")
+//        imgSelected3 = imgSelected3?.withRenderingMode(.alwaysTemplate)
         
+        let title = UILabel()
+        title.text = "BBBBBBBB"
+        title.frame = CGRect(x: 0, y: 0, width: 110, height: 22)
+        title.frame.size = title._slpGetSize()!
         
-        let barItemsSelected = [UIImageView(image: imgSelected0), UIImageView(image: imgSelected1), UIImageView(image: imgSelected2), UIImageView(image: imgSelected3)]
-        let barItems = [UIImageView(image: img0), UIImageView(image: img1), UIImageView(image: img2), UIImageView(image: img3)]
+        let barItemsSelected = [UIImageView(image: imgSelected0), title, UIImageView(image: imgSelected2)]//, UIImageView(image: imgSelected3)]
+        let barItems = [UIImageView(image: img0),
+                        UIImageView(image: img1),
+                        UIImageView(image: img2)]
+                        //UIImageView(image: img3)]
 //        for v in barItems
 //        {
 //            AppDelegate.addLayer(view: v)
 //        }
         
-        let controllers = [ctr0, ctr1, ctr2, ctr3]
+        let controllers = [ctr0, ctr1, ctr2]
         controller = SLPagingViewSwift(barItems: barItems, barItemsSelected: barItemsSelected, controllers: controllers, showPageControl: false)
         controller.navigationSideItemsStyle = .slNavigationSideItemsStyleOnBounds
         controller.pagingViewMovingRedefine = (  { scrollView, subviews in
