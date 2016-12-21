@@ -78,13 +78,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let navBarItems = subviews as? [NavBarHeader] {
                 for navBarItem in navBarItems {
                     
-                    let originX = CGFloat(navBarItem.frame.origin.x)
-
-                    let distance = CGFloat( self.controller.navigationSideItemsStyle.rawValue)
-                    
                     let vSize    = navBarItem.frame.size
-                    let margin  = self.controller.getOriginX(vSize, idx: CGFloat(navBarItem.tag), distance: CGFloat(distance), xOffset: 0)-100
+                    let originX = CGFloat(navBarItem.frame.origin.x + vSize.width/2)
+
+                    let distance = CGFloat( self.controller.navigationSideItemsStyle.rawValue+100)
                     
+                    
+                    let margin  = self.controller.getOriginX(vSize, idx: 0, distance: CGFloat(distance), xOffset: 0)
                     
                     let screenCenter = CGFloat(UIScreen.main.bounds.width/2)
                     let scale = CGFloat(screenCenter-margin)
@@ -93,10 +93,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     if navBarItem.tag == 0
                     {
-                        print("originX: \(originX) alpha: \(alpha) xOnScale: \(xOnScale) scale:\(scale) margin: \(margin)" )
+                        print("originX: \(originX) alpha: \(alpha) xOnScale: \(xOnScale) scale:\(scale) margin: \(margin) screenCenter:\(screenCenter)" )
                     }
                     
-//                    let alpha = CGFloat(abs(originX - 145))/(145-45)
                     navBarItem.regularView.alpha = alpha
                     navBarItem.selectedView.alpha = 1.0 - alpha
                 }
@@ -153,4 +152,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
+
 
