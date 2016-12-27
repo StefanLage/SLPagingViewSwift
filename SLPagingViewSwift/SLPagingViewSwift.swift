@@ -96,7 +96,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     fileprivate var navItems: [NavBarHeader]          = []
     fileprivate var needToShowPageControl: Bool = false
     fileprivate var isUserInteraction: Bool     = false
-    fileprivate var indexSelected: Int          = 1
+    fileprivate var indexSelected: Int          = 0
     fileprivate var nextIndex:Int               = -1
     
     // MARK: - Constructors
@@ -267,7 +267,9 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         self.indexSelected = index
         // Get the right position and update it
         let xOffset = CGFloat(index) * self.SCREENSIZE.width
-        self.scrollView.setContentOffset(CGPoint(x: xOffset, y: self.scrollView.contentOffset.y), animated: animated)
+        if self.scrollView != nil{
+            self.scrollView.setContentOffset(CGPoint(x: xOffset, y: self.scrollView.contentOffset.y), animated: animated)
+        }
         
         for (i , item) in navItems.enumerated()
         {
@@ -331,7 +333,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             
             prevVC.willMove(toParentViewController: nil)
         }
-        if let nextVC = self.viewControllers[index] , nextVC.parent == nil {
+        if let nextVC = self.viewControllers[index] , nextVC.parent == nil ,  self.scrollView != nil{
             nextVC.willMove(toParentViewController: self)
             self.addChildViewController(nextVC)
             self.scrollView.addSubview(nextVC.view)
