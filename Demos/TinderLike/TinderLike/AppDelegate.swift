@@ -91,10 +91,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let xOnScale = CGFloat(abs(originX - screenCenter))
                     let alpha = xOnScale/scale
                     
-                    if navBarItem.tag == 0
-                    {
-                        print("originX: \(originX) alpha: \(alpha) xOnScale: \(xOnScale) scale:\(scale) margin: \(margin) screenCenter:\(screenCenter)" )
-                    }
+//                    if navBarItem.tag == 0
+//                    {
+//                        print("originX: \(originX) alpha: \(alpha) xOnScale: \(xOnScale) scale:\(scale) margin: \(margin) screenCenter:\(screenCenter)" )
+//                    }
                     
                     navBarItem.regularView.alpha = alpha
                     navBarItem.selectedView.alpha = 1.0 - alpha

@@ -96,7 +96,8 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     fileprivate var navItems: [NavBarHeader]          = []
     fileprivate var needToShowPageControl: Bool = false
     fileprivate var isUserInteraction: Bool     = false
-    fileprivate var indexSelected: Int          = 0
+    fileprivate var indexSelected: Int          = 1
+    fileprivate var nextIndex:Int               = -1
     
     // MARK: - Constructors
     public required init(coder decoder: NSCoder) {
@@ -411,6 +412,12 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         }
         self.pagingViewMovingRedefine?(scrollView, self.navItems as NSArray)
         self.pagingViewMoving?(self.navItems)
+        
+        let candidateNextIndex = self.calcNextIndex(scrollView: scrollView)
+        if nextIndex != candidateNextIndex{
+            nextIndex = candidateNextIndex
+            showViewController(at: nextIndex)
+        }
     }
     
     open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -422,7 +429,11 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     }
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView)
     {
+        nextIndex = self.calcNextIndex(scrollView: scrollView)
         
+        showViewController(at: nextIndex)
+    }
+    func calcNextIndex(scrollView:UIScrollView) -> Int {
         var direction = 0
         let yVelocity: CGFloat = scrollView.panGestureRecognizer.velocity(in: scrollView).x
         if yVelocity < 0 {      direction = 1  } else
@@ -432,9 +443,7 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         let W:Int       = Int(self.SCREENSIZE.width)
         
         let nextIndex = xOffset / W + direction
-        
-        showViewController(at: nextIndex)
-        
+        return nextIndex
     }
     
 }
