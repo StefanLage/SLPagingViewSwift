@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var controller: SLPagingViewSwift!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        (MPVolumeView().subviews.filter{NSStringFromClass($0.classForCoder) == "MPVolumeSlider"}.first as? UISlider)?.setValue(1, animated: false)
+
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
 //        let orange = UIColor(red: 255/255, green: 69.0/255, blue: 0.0/255, alpha: 1.0)
         let orange = UIColor(red: 0/255, green: 0.0/255, blue: 255.0/255, alpha: 1.0)
@@ -62,10 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         UIImageView(image: img1),
                         UIImageView(image: img2)]
                         //UIImageView(image: img3)]
-//        for v in barItems
-//        {
-//            AppDelegate.addLayer(view: v)
-//        }
+
         
         let controllers = [ctr0, ctr1, ctr2]
         controller = SLPagingViewSwift(barItems: barItems, barItemsSelected: barItemsSelected, controllers: controllers, showPageControl: false)
@@ -74,30 +76,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           
         })
         controller.pagingViewMoving = ({ subviews in
-            
+        
             if let navBarItems = subviews as? [NavBarHeader] {
+
+                
                 for navBarItem in navBarItems {
                     
                     let vSize    = navBarItem.frame.size
-                    let originX = CGFloat(navBarItem.frame.origin.x + vSize.width/2)
+                    let currentX = CGFloat(navBarItem.frame.origin.x)
 
-                    let distance = CGFloat( self.controller.navigationSideItemsStyle.rawValue+100)
+                    let distance = CGFloat( self.controller.navigationSideItemsStyle.rawValue + 100)
                     
+                    let destX = self.controller.getOriginX(vSize, idx: 0, distance: distance, xOffset: 0).truncatingRemainder(dividingBy: distance)
                     
-                    let margin  = self.controller.getOriginX(vSize, idx: 0, distance: CGFloat(distance), xOffset: 0)
-                    
-                    let screenCenter = CGFloat(UIScreen.main.bounds.width/2)
-                    let scale = CGFloat(screenCenter-margin)
-                    let xOnScale = CGFloat(abs(originX - screenCenter))
+                    let xOnScale = CGFloat(abs( currentX-destX))
+                    let scale = distance
                     let alpha = xOnScale/scale
                     
-//                    if navBarItem.tag == 0
-//                    {
-//                        print("originX: \(originX) alpha: \(alpha) xOnScale: \(xOnScale) scale:\(scale) margin: \(margin) screenCenter:\(screenCenter)" )
+//                    if navBarItem.tag == 0 {
+//                        print("originX: \(Int(currentX)) destX: \(Int(destX)) xOnScale: \(Int(xOnScale)) scale:\(Int(scale)) alpha: \(alpha) " )
 //                    }
                     
                     navBarItem.regularView.alpha = alpha
                     navBarItem.selectedView.alpha = 1.0 - alpha
+
                 }
             }
         })
