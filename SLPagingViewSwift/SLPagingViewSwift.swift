@@ -322,11 +322,15 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
             self.scrollView.contentSize = CGSize(width: width, height: height)
             var i: Int                  = 0
             while let v = viewControllers[i] {
-                v.view.frame          = CGRect(x: self.SCREENSIZE.width * CGFloat(i), y: 0, width: self.SCREENSIZE.width, height: self.SCREENSIZE.height)
+                v.view.frame          = CGRect(x: self.SCREENSIZE.width * CGFloat(i), y: 0, width: self.SCREENSIZE.width, height: height)
                 i += 1
             }
         }
     }
+    override open func viewDidLayoutSubviews() {
+        setViewSizeAndLocation()
+    }
+
     func showViewController(at index:Int) -> Void {
         
         if let prevVC = self.viewControllers[self.indexSelected] , prevVC.parent == self {
