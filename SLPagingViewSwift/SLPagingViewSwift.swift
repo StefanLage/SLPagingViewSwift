@@ -235,7 +235,12 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
         self.setCurrentIndex(self.indexSelected, animated: false)
         self.view.backgroundColor = UIColor.white
     }
-    
+    open override func viewWillAppear(_ animated: Bool) {
+        self.navigationBarView.isHidden = false
+    }
+    open override func viewWillDisappear(_ animated: Bool) {
+        self.navigationBarView.isHidden = true
+    }
     open override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.navigationBarView.frame = CGRect(x: 0, y: 0, width: self.SCREENSIZE.width, height: 44)
@@ -330,7 +335,6 @@ open class SLPagingViewSwift: UIViewController, UIScrollViewDelegate {
     override open func viewDidLayoutSubviews() {
         setViewSizeAndLocation()
     }
-
     func showViewController(at index:Int) -> Void {
         
         if let prevVC = self.viewControllers[self.indexSelected] , prevVC.parent == self {
