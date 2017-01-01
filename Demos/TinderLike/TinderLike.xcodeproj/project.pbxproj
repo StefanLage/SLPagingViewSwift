@@ -12,6 +12,10 @@
 		F85CA9C11A61963B0013CF3F /* TinderLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85CA9C01A61963B0013CF3F /* TinderLikeTests.swift */; };
 		F85CA9CC1A61968B0013CF3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F85CA9CB1A61968B0013CF3F /* Default-568h@2x.png */; };
 		F85CA9D31A61990A0013CF3F /* SLPagingViewSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85CA9D21A61990A0013CF3F /* SLPagingViewSwift.swift */; };
+		FC7D60C61DF43CE900700038 /* VC0.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D60C21DF43CE900700038 /* VC0.swift */; };
+		FC7D60C71DF43CE900700038 /* VC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D60C31DF43CE900700038 /* VC1.swift */; };
+		FC7D60C81DF43CE900700038 /* VC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D60C41DF43CE900700038 /* VC2.swift */; };
+		FC7D60C91DF43CE900700038 /* VC3.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7D60C51DF43CE900700038 /* VC3.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,10 @@
 		F85CA9CA1A6196820013CF3F /* TinderLike-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TinderLike-Prefix.pch"; sourceTree = "<group>"; };
 		F85CA9CB1A61968B0013CF3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		F85CA9D21A61990A0013CF3F /* SLPagingViewSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SLPagingViewSwift.swift; path = ../../SLPagingViewSwift/SLPagingViewSwift.swift; sourceTree = "<group>"; };
+		FC7D60C21DF43CE900700038 /* VC0.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VC0.swift; path = TinderLike/VC0.swift; sourceTree = "<group>"; };
+		FC7D60C31DF43CE900700038 /* VC1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VC1.swift; path = TinderLike/VC1.swift; sourceTree = "<group>"; };
+		FC7D60C41DF43CE900700038 /* VC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VC2.swift; path = TinderLike/VC2.swift; sourceTree = "<group>"; };
+		FC7D60C51DF43CE900700038 /* VC3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VC3.swift; path = TinderLike/VC3.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +123,10 @@
 			isa = PBXGroup;
 			children = (
 				F85CA9D21A61990A0013CF3F /* SLPagingViewSwift.swift */,
+				FC7D60C21DF43CE900700038 /* VC0.swift */,
+				FC7D60C31DF43CE900700038 /* VC1.swift */,
+				FC7D60C41DF43CE900700038 /* VC2.swift */,
+				FC7D60C51DF43CE900700038 /* VC3.swift */,
 			);
 			name = SLPagingViewSwift;
 			sourceTree = "<group>";
@@ -163,14 +175,18 @@
 		F85CA99D1A61963B0013CF3F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Stefan Lage";
 				TargetAttributes = {
 					F85CA9A41A61963B0013CF3F = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = M4BCYUQAZQ;
+						LastSwiftMigration = 0810;
 					};
 					F85CA9B91A61963B0013CF3F = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = M4BCYUQAZQ;
+						LastSwiftMigration = 0810;
 						TestTargetID = F85CA9A41A61963B0013CF3F;
 					};
 				};
@@ -218,7 +234,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC7D60C91DF43CE900700038 /* VC3.swift in Sources */,
+				FC7D60C61DF43CE900700038 /* VC0.swift in Sources */,
 				F85CA9AB1A61963B0013CF3F /* AppDelegate.swift in Sources */,
+				FC7D60C81DF43CE900700038 /* VC2.swift in Sources */,
+				FC7D60C71DF43CE900700038 /* VC1.swift in Sources */,
 				F85CA9D31A61990A0013CF3F /* SLPagingViewSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,15 +275,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -297,8 +321,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -306,6 +332,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -315,6 +342,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -322,20 +350,26 @@
 		F85CA9C51A61963B0013CF3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = M4BCYUQAZQ;
 				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/TinderLike-Prefix.pch";
 				INFOPLIST_FILE = TinderLike/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "SL.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		F85CA9C61A61963B0013CF3F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = M4BCYUQAZQ;
 				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/TinderLike-Prefix.pch";
 				INFOPLIST_FILE = TinderLike/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "SL.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -343,6 +377,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = M4BCYUQAZQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -353,7 +388,9 @@
 				);
 				INFOPLIST_FILE = TinderLikeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "SL.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TinderLike.app/TinderLike";
 			};
 			name = Debug;
@@ -362,13 +399,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = M4BCYUQAZQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = TinderLikeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "SL.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TinderLike.app/TinderLike";
 			};
 			name = Release;
